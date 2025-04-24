@@ -101,7 +101,7 @@
   </div>
   <div id="last-save">Last saved: Not yet saved</div>
   <ul id="sortable-list">
-    <li>
+    <li data-id="item-1">
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">CORRIVEAU, DANNY</span>
@@ -109,7 +109,7 @@
       <div class="notes">
         <span class="editable" contenteditable="true">Danny mentioned needing a follow-up on the quote next week.</span>
       </div>
-      <ul class="sublist">
+      <ul class="sublist" data-group="sublist-item-1">
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">QUOTE LP OWNED BY DANNY AND MIL AS STR MANAGED BY PROP MGT CO</span>
@@ -141,9 +141,9 @@
           <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
       </ul>
-      <button onclick="addSubItem(this)">Add Sub-Item</button>
+      <button onclick="addSubItem(this)">Add Item</button>
     </li>
-    <li>
+    <li data-id="item-2">
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">VACHET, FARREN</span>
@@ -151,7 +151,7 @@
       <div class="notes">
         <span class="editable" contenteditable="true">Farren requested additional quotes for flood coverage.</span>
       </div>
-      <ul class="sublist">
+      <ul class="sublist" data-group="sublist-item-2">
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">QUOTE AUTO/UMB AND HOME, DONE?</span>
@@ -188,9 +188,9 @@
           <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
       </ul>
-      <button onclick="addSubItem(this)">Add Sub-Item</button>
+      <button onclick="addSubItem(this)">Add Item</button>
     </li>
-    <li>
+    <li data-id="item-3">
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">ELWYN, TASH</span>
@@ -198,16 +198,16 @@
       <div class="notes">
         <span class="editable" contenteditable="true">Tash needs clarification on flood quote requirements.</span>
       </div>
-      <ul class="sublist">
+      <ul class="sublist" data-group="sublist-item-3">
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">X-WIND QUOTES NEEDED, AND EXCESS FLOOD QUOTES NEEDED, REFER TO HIS EMAIL, DONE?</span>
           <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
       </ul>
-      <button onclick="addSubItem(this)">Add Sub-Item</button>
+      <button onclick="addSubItem(this)">Add Item</button>
     </li>
-    <li>
+    <li data-id="item-4">
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
@@ -215,7 +215,7 @@
       <div class="notes">
         <span class="editable" contenteditable="true">Nashana confirmed receipt of initial info.</span>
       </div>
-      <ul class="sublist">
+      <ul class="sublist" data-group="sublist-item-4">
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">CLIENT SENT INFO, GETTING WATER SECURITY QUOTE TO INSTALL, SUBMITTED TO CHUBB/PURE, HEAR?</span>
@@ -237,7 +237,7 @@
           <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
       </ul>
-      <button onclick="addSubItem(this)">Add Sub-Item</button>
+      <button onclick="addSubItem(this)">Add Item</button>
     </li>
   </ul>
 
@@ -246,12 +246,13 @@
     const sortableList = document.getElementById('sortable-list');
     const lastSaveDisplay = document.getElementById('last-save');
     const BACKEND_URL = "https://draggable-list-backend.glitch.me"; // Replace with your Glitch project URL
+    let itemCounter = sortableList.children.length; // For generating unique IDs
 
     // Initialize SortableJS for main list drag-and-drop
     new Sortable(sortableList, {
       animation: 150,
       onEnd: function (evt) {
-        // No need to update numbers since they are removed
+        // No action needed after reordering main items
       }
     });
 
@@ -259,9 +260,14 @@
     function initializeSublistSorting() {
       const sublists = document.querySelectorAll('.sublist');
       sublists.forEach(sublist => {
-        new Sortable(sublist, {
+        const groupId = sublist.getAttribute('data-group');
+        // Destroy any existing Sortable instance to prevent duplicates
+        if (sublist.sortable) {
+          sublist.sortable.destroy();
+        }
+        sublist.sortable = new Sortable(sublist, {
           animation: 150,
-          group: sublist, // Restrict dragging to within the same sublist
+          group: groupId, // Restrict dragging to within the same sublist
           onEnd: function (evt) {
             // No additional action needed after reordering sub-items
           }
@@ -286,7 +292,7 @@
       const newSubItem = document.createElement('li');
       newSubItem.innerHTML = `
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
-        <span class="editable" contenteditable="true">New sub-item...</span>
+        <span class="editable" contenteditable="true">New item...</span>
         <button class="remove-btn" onclick="removeSubItem(this)">x</button>
       `;
       sublist.appendChild(newSubItem);
@@ -388,8 +394,11 @@
         }
         if (items && Array.isArray(items) && items.length > 0) {
           sortableList.innerHTML = ''; // Clear the default list
+          itemCounter = 0; // Reset counter for new items
           items.forEach((item) => {
+            itemCounter++;
             const newItem = document.createElement('li');
+            newItem.setAttribute('data-id', `item-${itemCounter}`);
             newItem.innerHTML = `
               <div class="title-row">
                 <input type="checkbox" class="checkbox" ${item.titleChecked ? 'checked' : ''} onchange="toggleGray(this)">
@@ -398,7 +407,7 @@
               <div class="notes">
                 <span class="editable" contenteditable="true">${item.notes}</span>
               </div>
-              <ul class="sublist">
+              <ul class="sublist" data-group="sublist-item-${itemCounter}">
                 ${item.sublist.map(sub => `
                   <li>
                     <input type="checkbox" class="checkbox" ${sub.checked ? 'checked' : ''} onchange="toggleGray(this)">
@@ -407,7 +416,7 @@
                   </li>
                 `).join('')}
               </ul>
-              <button onclick="addSubItem(this)">Add Sub-Item</button>
+              <button onclick="addSubItem(this)">Add Item</button>
             `;
             sortableList.appendChild(newItem);
             // Re-apply lighter gray style to checked items
@@ -429,7 +438,9 @@
 
     // Function to add a new item at the top
     function addNewItem() {
+      itemCounter++;
       const newItem = document.createElement('li');
+      newItem.setAttribute('data-id', `item-${itemCounter}`);
       newItem.innerHTML = `
         <div class="title-row">
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
@@ -438,14 +449,14 @@
         <div class="notes">
           <span class="editable" contenteditable="true">Add notes here...</span>
         </div>
-        <ul class="sublist">
+        <ul class="sublist" data-group="sublist-item-${itemCounter}">
           <li>
             <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
             <span class="editable" contenteditable="true">Add details here...</span>
             <button class="remove-btn" onclick="removeSubItem(this)">x</button>
           </li>
         </ul>
-        <button onclick="addSubItem(this)">Add Sub-Item</button>
+        <button onclick="addSubItem(this)">Add Item</button>
       `;
       sortableList.prepend(newItem); // Add to the top
       initializeSublistSorting(); // Re-initialize sorting for the new sublist
