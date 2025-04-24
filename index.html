@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Account Marketing List</title>
+  <title>Editable Draggable List Tool with Checkboxes and Notes</title>
   <style>
     #sortable-list {
       list-style: none;
@@ -60,6 +60,9 @@
       margin-bottom: 10px;
       font-weight: bold;
     }
+    .number {
+      margin-right: 5px;
+    }
     .sublist li {
       display: flex;
       align-items: center;
@@ -71,7 +74,7 @@
   </style>
 </head>
 <body>
-  <h1>Account Marketing List</h1>
+  <h1>Editable Draggable List Tool with Checkboxes and Notes</h1>
   <div class="controls">
     <button onclick="addNewItem()">Add New Item</button>
     <button onclick="saveList()">Save Changes</button>
@@ -79,8 +82,9 @@
   <ul id="sortable-list">
     <li>
       <div class="title-row">
+        <span class="number">1. </span>
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
-        <span class="number">1. </span><span class="editable" contenteditable="true">CORRIVEAU, DANNY</span>
+        <span class="editable" contenteditable="true">CORRIVEAU, DANNY</span>
       </div>
       <div class="notes">
         <span class="editable" contenteditable="true">Danny mentioned needing a follow-up on the quote next week.</span>
@@ -114,8 +118,9 @@
     </li>
     <li>
       <div class="title-row">
+        <span class="number">2. </span>
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
-        <span class="number">2. </span><span class="editable" contenteditable="true">VACHET, FARREN</span>
+        <span class="editable" contenteditable="true">VACHET, FARREN</span>
       </div>
       <div class="notes">
         <span class="editable" contenteditable="true">Farren requested additional quotes for flood coverage.</span>
@@ -153,8 +158,9 @@
     </li>
     <li>
       <div class="title-row">
+        <span class="number">3. </span>
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
-        <span class="number">3. </span><span class="editable" contenteditable="true">ELWYN, TASH</span>
+        <span class="editable" contenteditable="true">ELWYN, TASH</span>
       </div>
       <div class="notes">
         <span class="editable" contenteditable="true">Tash needs clarification on flood quote requirements.</span>
@@ -168,8 +174,9 @@
     </li>
     <li>
       <div class="title-row">
+        <span class="number">4. </span>
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
-        <span class="number">4. </span><span class="editable" contenteditable="true">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
+        <span class="editable" contenteditable="true">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
       </div>
       <div class="notes">
         <span class="editable" contenteditable="true">Nashana confirmed receipt of initial info.</span>
@@ -221,7 +228,7 @@
 
     // Function to toggle lighter gray color for the specific item
     function toggleGray(checkbox) {
-      const editableText = checkbox.nextElementSibling.nextElementSibling || checkbox.nextElementSibling;
+      const editableText = checkbox.nextElementSibling;
       if (checkbox.checked) {
         editableText.classList.add('lighter-gray');
       } else {
@@ -319,8 +326,9 @@
             const newItem = document.createElement('li');
             newItem.innerHTML = `
               <div class="title-row">
+                <span class="number">${index + 1}. </span>
                 <input type="checkbox" class="checkbox" ${item.titleChecked ? 'checked' : ''} onchange="toggleGray(this)">
-                <span class="number">${index + 1}. </span><span class="editable" contenteditable="true">${item.title}</span>
+                <span class="editable" contenteditable="true">${item.title}</span>
               </div>
               <div class="notes">
                 <span class="editable" contenteditable="true">${item.notes}</span>
@@ -339,7 +347,7 @@
             const checkboxes = newItem.querySelectorAll('.checkbox');
             checkboxes.forEach(checkbox => {
               if (checkbox.checked) {
-                const editableText = checkbox.nextElementSibling.nextElementSibling || checkbox.nextElementSibling;
+                const editableText = checkbox.nextElementSibling;
                 editableText.classList.add('lighter-gray');
               }
             });
@@ -356,8 +364,9 @@
       const newItem = document.createElement('li');
       newItem.innerHTML = `
         <div class="title-row">
+          <span class="number">1. </span>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
-          <span class="number">1. </span><span class="editable" contenteditable="true">New Item</span>
+          <span class="editable" contenteditable="true">New Item</span>
         </div>
         <div class="notes">
           <span class="editable" contenteditable="true">Add notes here...</span>
