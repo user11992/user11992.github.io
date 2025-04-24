@@ -126,6 +126,25 @@
       cursor: move;
       font-size: 1em;
     }
+    #scroll-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.2em;
+      cursor: pointer;
+      display: none; /* Hidden by default */
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    #scroll-to-top:hover {
+      background-color: #45a049;
+    }
   </style>
 </head>
 <body>
@@ -133,12 +152,13 @@
     <h1>Account Marketing List</h1>
     <div class="controls">
       <button onclick="addNewItem()">Add New Client</button>
-      <button onclick="saveList()">Save Changes</button>
+      <button onclick="saveList()" id="save-button">Save Changes</button>
       <button onclick="undoAction()">Undo</button>
       <button onclick="redoAction()">Redo</button>
     </div>
     <div id="last-save">Last saved: Not yet saved</div>
   </div>
+  <button id="scroll-to-top" onclick="scrollToTop()">↑</button>
   <ul id="sortable-list">
     <li data-id="item-1">
       <div class="title-row">
@@ -312,6 +332,7 @@
   <script>
     const sortableList = document.getElementById('sortable-list');
     const lastSaveDisplay = document.getElementById('last-save');
+    const scrollToTopBtn = document.getElementById('scroll-to-top');
     const BACKEND_URL = "https://draggable-list-backend.glitch.me"; // Replace with your Glitch project URL
     let itemCounter = sortableList.children.length; // For generating unique IDs
     const undoStack = []; // Stack to store previous states for undo
@@ -364,6 +385,23 @@
         titleRow.classList.add('completed');
       }
     }
+
+    // Function to scroll to the top of the page
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // Show/hide scroll-to-top button based on scroll position
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) { // Show button after scrolling down 300px
+        scrollToTopBtn.style.display = 'block';
+      } else {
+        scrollToTopBtn.style.display = 'none';
+      }
+    });
 
     // Function to save the current state for undo
     function saveStateForUndo() {
@@ -640,43 +678,6 @@
         console.error('Error loading list:', error);
         initializeSublistSorting(); // Initialize sorting even if loading fails
       }
-    }
-
-    // Function to add a new item at the top
-    function addNewItem() {
-      saveStateForUndo(); // Save state before adding
-      itemCounter++;
-      const newItem = document.createElement('li');
-      newItem.setAttribute('data-id', `item-${itemCounter}`);
-      newItem.innerHTML = `
-        <div class="title-row">
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
-          <span class="editable" contenteditable="true">New Item</span>
-          <select class="status-select" onchange="updateItemHighlightColor(this)">
-            <option value="default">Select Status</option>
-            <option value="waiting">Waiting for Client</option>
-            <option value="action-required">Action Required</option>
-            <option value="completed">Completed</option>
-          </select>
-          <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
-        </div>
-        <div class="notes">
-          <span class="editable" contenteditable="true">Add notes here...</span>
-        </div>
-        <ul class="sublist" data-group="sublist-item-${itemCounter}">
-          <li>
-            <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
-            <span class="editable" contenteditable="true">Add details here...</span>
-            <button class="remove-btn" onclick="removeSubItem(this)">x</button>
-          </li>
-        </ul>
-        <button onclick="addSubItem(this)">Add Item</button>
-      `;
-      sortableList.prepend(newItem); // Add to the top
-      initializeSublistSorting(); // Re-initialize sorting for the new sublist
-      // Apply the correct highlight color based on status
-      const dropdown = newItem.querySelector('.status-select');
-      updateItemHighlightColor(dropdown);
     }
 
     // Load the saved list when the page loads
