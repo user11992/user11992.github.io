@@ -33,9 +33,9 @@
       color: #666;
       margin: 5px 0;
     }
-    #status-select {
-      margin: 5px;
-      padding: 5px;
+    .status-select {
+      margin-left: 10px;
+      padding: 2px;
       font-size: 0.8em;
     }
     #sortable-list {
@@ -68,7 +68,7 @@
       display: block;
       margin: 5px 0;
       padding: 5px;
-      font-size: 1em; /* Same size as sublist items */
+      font-size: 1em;
     }
     button {
       display: inline-block;
@@ -108,7 +108,7 @@
       font-weight: bold;
       background-color: #e6f0fa; /* Default highlight color */
       padding: 5px;
-      font-size: 1.2em; /* Larger font for main list item */
+      font-size: 1.2em;
     }
     .title-row.waiting {
       background-color: #fff3cd; /* Yellow for Waiting for Client */
@@ -121,7 +121,7 @@
       align-items: center;
       margin: 5px 0;
       cursor: move;
-      font-size: 1em; /* Same size as notes */
+      font-size: 1em;
     }
   </style>
 </head>
@@ -133,11 +133,6 @@
       <button onclick="saveList()">Save Changes</button>
       <button onclick="undoAction()">Undo</button>
       <button onclick="redoAction()">Redo</button>
-      <select id="status-select" onchange="updateHighlightColor()">
-        <option value="default">Select Status</option>
-        <option value="waiting">Waiting for Client</option>
-        <option value="completed">Completed</option>
-      </select>
     </div>
     <div id="last-save">Last saved: Not yet saved</div>
   </div>
@@ -146,6 +141,11 @@
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">CORRIVEAU, DANNY</span>
+        <select class="status-select" onchange="updateItemHighlightColor(this)">
+          <option value="default">Select Status</option>
+          <option value="waiting">Waiting for Client</option>
+          <option value="completed">Completed</option>
+        </select>
         <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
       </div>
       <div class="notes">
@@ -189,6 +189,11 @@
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">VACHET, FARREN</span>
+        <select class="status-select" onchange="updateItemHighlightColor(this)">
+          <option value="default">Select Status</option>
+          <option value="waiting">Waiting for Client</option>
+          <option value="completed">Completed</option>
+        </select>
         <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
       </div>
       <div class="notes">
@@ -237,6 +242,11 @@
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">ELWYN, TASH</span>
+        <select class="status-select" onchange="updateItemHighlightColor(this)">
+          <option value="default">Select Status</option>
+          <option value="waiting">Waiting for Client</option>
+          <option value="completed">Completed</option>
+        </select>
         <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
       </div>
       <div class="notes">
@@ -255,6 +265,11 @@
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
+        <select class="status-select" onchange="updateItemHighlightColor(this)">
+          <option value="default">Select Status</option>
+          <option value="waiting">Waiting for Client</option>
+          <option value="completed">Completed</option>
+        </select>
         <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
       </div>
       <div class="notes">
@@ -290,7 +305,6 @@
   <script>
     const sortableList = document.getElementById('sortable-list');
     const lastSaveDisplay = document.getElementById('last-save');
-    const statusSelect = document.getElementById('status-select');
     const BACKEND_URL = "https://draggable-list-backend.glitch.me"; // Replace with your Glitch project URL
     let itemCounter = sortableList.children.length; // For generating unique IDs
     const undoStack = []; // Stack to store previous states for undo
@@ -330,18 +344,16 @@
       });
     }
 
-    // Function to update the highlight color based on dropdown selection
-    function updateHighlightColor() {
-      const status = statusSelect.value;
-      const titleRows = document.querySelectorAll('.title-row');
-      titleRows.forEach(row => {
-        row.classList.remove('waiting', 'completed');
-        if (status === 'waiting') {
-          row.classList.add('waiting');
-        } else if (status === 'completed') {
-          row.classList.add('completed');
-        }
-      });
+    // Function to update the highlight color for a specific main list item
+    function updateItemHighlightColor(dropdown) {
+      const titleRow = dropdown.parentElement; // .title-row
+      const status = dropdown.value;
+      titleRow.classList.remove('waiting', 'completed');
+      if (status === 'waiting') {
+        titleRow.classList.add('waiting');
+      } else if (status === 'completed') {
+        titleRow.classList.add('completed');
+      }
     }
 
     // Function to save the current state for undo
@@ -368,7 +380,6 @@
       const previousState = undoStack.pop();
       renderListFromState(previousState);
       initializeSublistSorting(); // Re-initialize sorting after undoing
-      updateHighlightColor(); // Re-apply highlight color after undoing
     }
 
     // Function to redo the last undone action
@@ -385,7 +396,6 @@
       const nextState = redoStack.pop();
       renderListFromState(nextState);
       initializeSublistSorting(); // Re-initialize sorting after redoing
-      updateHighlightColor(); // Re-apply highlight color after redoing
     }
 
     // Function to render the list from a given state
@@ -400,6 +410,11 @@
           <div class="title-row">
             <input type="checkbox" class="checkbox" ${item.titleChecked ? 'checked' : ''} onchange="toggleGray(this)">
             <span class="editable" contenteditable="true">${item.title}</span>
+            <select class="status-select" onchange="updateItemHighlightColor(this)">
+              <option value="default" ${item.status === 'default' || !item.status ? 'selected' : ''}>Select Status</option>
+              <option value="waiting" ${item.status === 'waiting' ? 'selected' : ''}>Waiting for Client</option>
+              <option value="completed" ${item.status === 'completed' ? 'selected' : ''}>Completed</option>
+            </select>
             <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
           </div>
           <div class="notes">
@@ -425,6 +440,9 @@
             editableText.classList.add('lighter-gray');
           }
         });
+        // Apply the correct highlight color based on status
+        const dropdown = newItem.querySelector('.status-select');
+        updateItemHighlightColor(dropdown);
       });
     }
 
@@ -476,20 +494,23 @@
         const titleCheckbox = item.querySelector('.title-row .checkbox');
         const titleElement = item.querySelector('.title-row .editable');
         const notesElement = item.querySelector('.notes .editable');
+        const statusSelect = item.querySelector('.status-select');
         const sublistItems = item.querySelectorAll('.sublist li');
 
         // Check if required elements exist
-        if (!titleCheckbox || !titleElement || !notesElement) {
+        if (!titleCheckbox || !titleElement || !notesElement || !statusSelect) {
           console.warn(`Skipping item ${i} due to missing elements:`, {
             titleCheckbox: !!titleCheckbox,
             titleElement: !!titleElement,
-            notesElement: !!notesElement
+            notesElement: !!notesElement,
+            statusSelect: !!statusSelect
           });
           continue;
         }
 
         const titleText = titleElement.innerText || '';
         const notesText = notesElement.innerText || '';
+        const status = statusSelect.value;
         const sublist = [];
         sublistItems.forEach((subItem, subIndex) => {
           const subCheckbox = subItem.querySelector('.checkbox');
@@ -511,6 +532,7 @@
           title: titleText,
           titleChecked: titleCheckbox.checked,
           notes: notesText,
+          status: status,
           sublist: sublist
         });
       }
@@ -567,6 +589,11 @@
               <div class="title-row">
                 <input type="checkbox" class="checkbox" ${item.titleChecked ? 'checked' : ''} onchange="toggleGray(this)">
                 <span class="editable" contenteditable="true">${item.title}</span>
+                <select class="status-select" onchange="updateItemHighlightColor(this)">
+                  <option value="default" ${item.status === 'default' || !item.status ? 'selected' : ''}>Select Status</option>
+                  <option value="waiting" ${item.status === 'waiting' ? 'selected' : ''}>Waiting for Client</option>
+                  <option value="completed" ${item.status === 'completed' ? 'selected' : ''}>Completed</option>
+                </select>
                 <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
               </div>
               <div class="notes">
@@ -592,10 +619,12 @@
                 editableText.classList.add('lighter-gray');
               }
             });
+            // Apply the correct highlight color based on status
+            const dropdown = newItem.querySelector('.status-select');
+            updateItemHighlightColor(dropdown);
           });
         }
         initializeSublistSorting(); // Initialize sorting after loading
-        updateHighlightColor(); // Apply initial highlight color
       } catch (error) {
         console.error('Error loading list:', error);
         initializeSublistSorting(); // Initialize sorting even if loading fails
@@ -612,6 +641,11 @@
         <div class="title-row">
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">New Item</span>
+          <select class="status-select" onchange="updateItemHighlightColor(this)">
+            <option value="default">Select Status</option>
+            <option value="waiting">Waiting for Client</option>
+            <option value="completed">Completed</option>
+          </select>
           <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
         </div>
         <div class="notes">
@@ -628,7 +662,9 @@
       `;
       sortableList.prepend(newItem); // Add to the top
       initializeSublistSorting(); // Re-initialize sorting for the new sublist
-      updateHighlightColor(); // Apply highlight color to new item
+      // Apply the correct highlight color based on status
+      const dropdown = newItem.querySelector('.status-select');
+      updateItemHighlightColor(dropdown);
     }
 
     // Load the saved list when the page loads
