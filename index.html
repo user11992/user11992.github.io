@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Draggable List Tool</title>
+  <title>Editable Draggable List Tool</title>
   <style>
     #sortable-list {
       list-style: none;
@@ -22,43 +22,68 @@
       list-style-type: disc;
       padding-left: 20px;
     }
+    .editable {
+      display: inline-block;
+      width: 100%;
+      outline: none;
+    }
+    .editable:hover {
+      background-color: #e0e0e0;
+    }
+    button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
   </style>
 </head>
 <body>
-  <h1>Draggable List Tool</h1>
+  <h1>Editable Draggable List Tool</h1>
+  <button onclick="addNewItem()">Add New Item</button>
   <ul id="sortable-list">
-    <li>1. CORRIVEAU, DANNY
+    <li>
+      <span class="number">1. </span><span class="editable" contenteditable="true">CORRIVEAU, DANNY</span>
       <ul>
-        <li>QUOTE LP OWNED BY DANNY AND MIL AS STR MANAGED BY PROP MGT CO</li>
-        <li>FRONTLINE - OVER 6BR MUST BE REVIEWED BY UW, TENT QUOTE $6,449</li>
-        <li>AM INT - QUOTED ALREADY</li>
-        <li>ORCHID</li>
-        <li>AMWINS</li>
-        <li>THIGH</li>
+        <li><span class="editable" contenteditable="true">QUOTE LP OWNED BY DANNY AND MIL AS STR MANAGED BY PROP MGT CO</span></li>
+        <li><span class="editable" contenteditable="true">FRONTLINE - OVER 6BR MUST BE REVIEWED BY UW, TENT QUOTE $6,449</span></li>
+        <li><span class="editable" contenteditable="true">AM INT - QUOTED ALREADY</span></li>
+        <li><span class="editable" contenteditable="true">ORCHID</span></li>
+        <li><span class="editable" contenteditable="true">AMWINS</span></li>
+        <li><span class="editable" contenteditable="true">THIGH</span></li>
       </ul>
     </li>
-    <li>2. VACHET, FARREN
+    <li>
+      <span class="number">2. </span><span class="editable" contenteditable="true">VACHET, FARREN</span>
       <ul>
-        <li>QUOTE AUTO/UMB AND HOME, DONE?</li>
-        <li>PROGRESSIVE - QUOTED</li>
-        <li>RLI - QUOTED</li>
-        <li>MERCURY - SUBMITTED</li>
-        <li>OLYMPUS - DECLINED MUST BE MASONRY PIERS</li>
-        <li>THIG - OLDER THAN 2005 INELIGIBLE FOR WOOD PILINGS</li>
-        <li>FRONTLINE - QUOTED</li>
+        <li><span class="editable" contenteditable="true">QUOTE AUTO/UMB AND HOME, DONE?</span></li>
+        <li><span class="editable" contenteditable="true">PROGRESSIVE - QUOTED</span></li>
+        <li><span class="editable" contenteditable="true">RLI - QUOTED</span></li>
+        <li><span class="editable" contenteditable="true">MERCURY - SUBMITTED</span></li>
+        <li><span class="editable" contenteditable="true">OLYMPUS - DECLINED MUST BE MASONRY PIERS</span></li>
+        <li><span class="editable" contenteditable="true">THIG - OLDER THAN 2005 INELIGIBLE FOR WOOD PILINGS</span></li>
+        <li><span class="editable" contenteditable="true">FRONTLINE - QUOTED</span></li>
       </ul>
     </li>
-    <li>3. ELWYN, TASH
+    <li>
+      <span class="number">3. </span><span class="editable" contenteditable="true">ELWYN, TASH</span>
       <ul>
-        <li>X-WIND QUOTES NEEDED, AND EXCESS FLOOD QUOTES NEEDED, REFER TO HIS EMAIL, DONE?</li>
+        <li><span class="editable" contenteditable="true">X-WIND QUOTES NEEDED, AND EXCESS FLOOD QUOTES NEEDED, REFER TO HIS EMAIL, DONE?</span></li>
       </ul>
     </li>
-    <li>4. ELLIOTT, NASHANA (CALL IN CHUBB)
+    <li>
+      <span class="number">4. </span><span class="editable" contenteditable="true">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
       <ul>
-        <li>CLIENT SENT INFO, GETTING WATER SECURITY QUOTE TO INSTALL, SUBMITTED TO CHUBB/PURE, HEAR?</li>
-        <li>CHUBB - SENT FOR REVIEW</li>
-        <li>PURE - SENT FOR REVIEW</li>
-        <li>SLIDE - INCUMBENT</li>
+        <li><span class="editable" contenteditable="true">CLIENT SENT INFO, GETTING WATER SECURITY QUOTE TO INSTALL, SUBMITTED TO CHUBB/PURE, HEAR?</span></li>
+        <li><span class="editable" contenteditable="true">CHUBB - SENT FOR REVIEW</span></li>
+        <li><span class="editable" contenteditable="true">PURE - SENT FOR REVIEW</span></li>
+        <li><span class="editable" contenteditable="true">SLIDE - INCUMBENT</span></li>
       </ul>
     </li>
   </ul>
@@ -66,17 +91,41 @@
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
   <script>
     const sortableList = document.getElementById('sortable-list');
+    
+    // Initialize SortableJS for drag-and-drop
     new Sortable(sortableList, {
       animation: 150,
       onEnd: function (evt) {
-        const items = sortableList.getElementsByTagName('li');
-        for (let i = 0; i < items.length; i++) {
-          // Update numbering while preserving the rest of the text
-          const itemText = items[i].childNodes[0].textContent.split('. ')[1] || items[i].childNodes[0].textContent;
-          items[i].childNodes[0].textContent = `${i + 1}. ${itemText}`;
-        }
+        updateNumbers();
       }
     });
+
+    // Function to update numbering after dragging
+    function updateNumbers() {
+      const items = sortableList.getElementsByTagName('li');
+      for (let i = 0; i < items.length; i++) {
+        const numberSpan = items[i].querySelector('.number');
+        if (numberSpan) {
+          numberSpan.textContent = `${i + 1}. `;
+        }
+      }
+    }
+
+    // Function to add a new item
+    function addNewItem() {
+      const newItem = document.createElement('li');
+      const itemCount = sortableList.getElementsByTagName('li').length + 1;
+      
+      newItem.innerHTML = `
+        <span class="number">${itemCount}. </span><span class="editable" contenteditable="true">New Item</span>
+        <ul>
+          <li><span class="editable" contenteditable="true">Add details here...</span></li>
+        </ul>
+      `;
+      
+      sortableList.appendChild(newItem);
+      updateNumbers();
+    }
   </script>
 </body>
 </html>
