@@ -37,8 +37,8 @@
       font-size: 0.9em;
     }
     button {
-      display: block;
-      margin: 10px auto;
+      display: inline-block;
+      margin: 10px 5px;
       padding: 10px 20px;
       background-color: #4CAF50;
       color: white;
@@ -65,125 +65,131 @@
       align-items: center;
       margin: 5px 0;
     }
+    .controls {
+      text-align: center;
+    }
   </style>
 </head>
 <body>
   <h1>Editable Draggable List Tool with Checkboxes and Notes</h1>
-  <button onclick="addNewItem()">Add New Item</button>
+  <div class="controls">
+    <button onclick="addNewItem()">Add New Item</button>
+    <button onclick="saveList()">Save Changes</button>
+  </div>
   <ul id="sortable-list">
     <li>
       <div class="title-row">
-        <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-        <span class="number">1. </span><span class="editable" contenteditable="true" oninput="saveList()">CORRIVEAU, DANNY</span>
+        <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+        <span class="number">1. </span><span class="editable" contenteditable="true">CORRIVEAU, DANNY</span>
       </div>
       <div class="notes">
-        <span class="editable" contenteditable="true" oninput="saveList()">Danny mentioned needing a follow-up on the quote next week.</span>
+        <span class="editable" contenteditable="true">Danny mentioned needing a follow-up on the quote next week.</span>
       </div>
       <ul class="sublist">
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">QUOTE LP OWNED BY DANNY AND MIL AS STR MANAGED BY PROP MGT CO</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">QUOTE LP OWNED BY DANNY AND MIL AS STR MANAGED BY PROP MGT CO</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">FRONTLINE - OVER 6BR MUST BE REVIEWED BY UW, TENT QUOTE $6,449</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">FRONTLINE - OVER 6BR MUST BE REVIEWED BY UW, TENT QUOTE $6,449</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">AM INT - QUOTED ALREADY</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">AM INT - QUOTED ALREADY</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">ORCHID</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">ORCHID</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">AMWINS</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">AMWINS</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">THIGH</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">THIGH</span>
         </li>
       </ul>
     </li>
     <li>
       <div class="title-row">
-        <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-        <span class="number">2. </span><span class="editable" contenteditable="true" oninput="saveList()">VACHET, FARREN</span>
+        <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+        <span class="number">2. </span><span class="editable" contenteditable="true">VACHET, FARREN</span>
       </div>
       <div class="notes">
-        <span class="editable" contenteditable="true" oninput="saveList()">Farren requested additional quotes for flood coverage.</span>
+        <span class="editable" contenteditable="true">Farren requested additional quotes for flood coverage.</span>
       </div>
       <ul class="sublist">
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">QUOTE AUTO/UMB AND HOME, DONE?</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">QUOTE AUTO/UMB AND HOME, DONE?</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">PROGRESSIVE - QUOTED</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">PROGRESSIVE - QUOTED</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">RLI - QUOTED</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">RLI - QUOTED</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">MERCURY - SUBMITTED</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">MERCURY - SUBMITTED</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">OLYMPUS - DECLINED MUST BE MASONRY PIERS</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">OLYMPUS - DECLINED MUST BE MASONRY PIERS</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">THIG - OLDER THAN 2005 INELIGIBLE FOR WOOD PILINGS</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">THIG - OLDER THAN 2005 INELIGIBLE FOR WOOD PILINGS</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">FRONTLINE - QUOTED</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">FRONTLINE - QUOTED</span>
         </li>
       </ul>
     </li>
     <li>
       <div class="title-row">
-        <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-        <span class="number">3. </span><span class="editable" contenteditable="true" oninput="saveList()">ELWYN, TASH</span>
+        <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+        <span class="number">3. </span><span class="editable" contenteditable="true">ELWYN, TASH</span>
       </div>
       <div class="notes">
-        <span class="editable" contenteditable="true" oninput="saveList()">Tash needs clarification on flood quote requirements.</span>
+        <span class="editable" contenteditable="true">Tash needs clarification on flood quote requirements.</span>
       </div>
       <ul class="sublist">
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">X-WIND QUOTES NEEDED, AND EXCESS FLOOD QUOTES NEEDED, REFER TO HIS EMAIL, DONE?</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">X-WIND QUOTES NEEDED, AND EXCESS FLOOD QUOTES NEEDED, REFER TO HIS EMAIL, DONE?</span>
         </li>
       </ul>
     </li>
     <li>
       <div class="title-row">
-        <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-        <span class="number">4. </span><span class="editable" contenteditable="true" oninput="saveList()">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
+        <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+        <span class="number">4. </span><span class="editable" contenteditable="true">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
       </div>
       <div class="notes">
-        <span class="editable" contenteditable="true" oninput="saveList()">Nashana confirmed receipt of initial info.</span>
+        <span class="editable" contenteditable="true">Nashana confirmed receipt of initial info.</span>
       </div>
       <ul class="sublist">
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">CLIENT SENT INFO, GETTING WATER SECURITY QUOTE TO INSTALL, SUBMITTED TO CHUBB/PURE, HEAR?</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">CLIENT SENT INFO, GETTING WATER SECURITY QUOTE TO INSTALL, SUBMITTED TO CHUBB/PURE, HEAR?</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">CHUBB - SENT FOR REVIEW</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">CHUBB - SENT FOR REVIEW</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">PURE - SENT FOR REVIEW</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">PURE - SENT FOR REVIEW</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="editable" contenteditable="true" oninput="saveList()">SLIDE - INCUMBENT</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="editable" contenteditable="true">SLIDE - INCUMBENT</span>
         </li>
       </ul>
     </li>
@@ -192,13 +198,13 @@
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
   <script>
     const sortableList = document.getElementById('sortable-list');
+    const BACKEND_URL = "https://draggable-list-backend.glitch.me"; // Replace with your Glitch project URL
 
     // Initialize SortableJS for drag-and-drop
     new Sortable(sortableList, {
       animation: 150,
       onEnd: function (evt) {
         updateNumbers();
-        saveList();
       }
     });
 
@@ -223,8 +229,8 @@
       }
     }
 
-    // Function to save the list state to localStorage
-    function saveList() {
+    // Function to collect the current list state
+    function getListState() {
       const items = [];
       const listItems = sortableList.getElementsByTagName('li');
       for (let i = 0; i < listItems.length; i++) {
@@ -249,46 +255,75 @@
           sublist: sublist
         });
       }
-      localStorage.setItem('draggableList', JSON.stringify(items));
+      return items;
     }
 
-    // Function to load the list state from localStorage
-    function loadList() {
-      const savedItems = localStorage.getItem('draggableList');
-      if (savedItems) {
-        const items = JSON.parse(savedItems);
-        sortableList.innerHTML = ''; // Clear the default list
-        items.forEach((item, index) => {
-          const newItem = document.createElement('li');
-          newItem.innerHTML = `
-            <div class="title-row">
-              <input type="checkbox" class="checkbox" ${item.titleChecked ? 'checked' : ''} onchange="toggleGray(this); saveList()">
-              <span class="number">${index + 1}. </span><span class="editable" contenteditable="true" oninput="saveList()">${item.title}</span>
-            </div>
-            <div class="notes">
-              <span class="editable" contenteditable="true" oninput="saveList()">${item.notes}</span>
-            </div>
-            <ul class="sublist">
-              ${item.sublist.map(sub => `
-                <li>
-                  <input type="checkbox" class="checkbox" ${sub.checked ? 'checked' : ''} onchange="toggleGray(this); saveList()">
-                  <span class="editable" contenteditable="true" oninput="saveList()">${sub.text}</span>
-                </li>
-              `).join('')}
-            </ul>
-          `;
-          sortableList.appendChild(newItem);
-          // Re-apply lighter gray style to checked items
-          const checkboxes = newItem.querySelectorAll('.checkbox');
-          checkboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-              const editableText = checkbox.nextElementSibling.nextElementSibling || checkbox.nextElementSibling;
-              editableText.classList.add('lighter-gray');
-            }
-          });
+    // Function to save the list to the backend
+    async function saveList() {
+      try {
+        const listState = getListState();
+        const response = await fetch(`${BACKEND_URL}/list`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(listState)
         });
-      } else {
-        saveList(); // Save the default list if nothing is found
+        const result = await response.json();
+        if (response.ok) {
+          alert('List saved successfully!');
+        } else {
+          throw new Error(result.error || 'Failed to save list');
+        }
+      } catch (error) {
+        console.error('Error saving list:', error);
+        alert('Error saving list: ' + error.message);
+      }
+    }
+
+    // Function to load the list from the backend
+    async function loadList() {
+      try {
+        const response = await fetch(`${BACKEND_URL}/list`);
+        const items = await response.json();
+        if (!response.ok) {
+          throw new Error(items.error || 'Failed to load list');
+        }
+        if (items && Array.isArray(items) && items.length > 0) {
+          sortableList.innerHTML = ''; // Clear the default list
+          items.forEach((item, index) => {
+            const newItem = document.createElement('li');
+            newItem.innerHTML = `
+              <div class="title-row">
+                <input type="checkbox" class="checkbox" ${item.titleChecked ? 'checked' : ''} onchange="toggleGray(this)">
+                <span class="number">${index + 1}. </span><span class="editable" contenteditable="true">${item.title}</span>
+              </div>
+              <div class="notes">
+                <span class="editable" contenteditable="true">${item.notes}</span>
+              </div>
+              <ul class="sublist">
+                ${item.sublist.map(sub => `
+                  <li>
+                    <input type="checkbox" class="checkbox" ${sub.checked ? 'checked' : ''} onchange="toggleGray(this)">
+                    <span class="editable" contenteditable="true">${sub.text}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            `;
+            sortableList.appendChild(newItem);
+            // Re-apply lighter gray style to checked items
+            const checkboxes = newItem.querySelectorAll('.checkbox');
+            checkboxes.forEach(checkbox => {
+              if (checkbox.checked) {
+                const editableText = checkbox.nextElementSibling.nextElementSibling || checkbox.nextElementSibling;
+                editableText.classList.add('lighter-gray');
+              }
+            });
+          });
+        }
+      } catch (error) {
+        console.error('Error loading list:', error);
+        // Fallback to the default list if loading fails
       }
     }
 
@@ -297,22 +332,21 @@
       const newItem = document.createElement('li');
       newItem.innerHTML = `
         <div class="title-row">
-          <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-          <span class="number">1. </span><span class="editable" contenteditable="true" oninput="saveList()">New Item</span>
+          <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+          <span class="number">1. </span><span class="editable" contenteditable="true">New Item</span>
         </div>
         <div class="notes">
-          <span class="editable" contenteditable="true" oninput="saveList()">Add notes here...</span>
+          <span class="editable" contenteditable="true">Add notes here...</span>
         </div>
         <ul class="sublist">
           <li>
-            <input type="checkbox" class="checkbox" onchange="toggleGray(this); saveList()">
-            <span class="editable" contenteditable="true" oninput="saveList()">Add details here...</span>
+            <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+            <span class="editable" contenteditable="true">Add details here...</span>
           </li>
         </ul>
       `;
       sortableList.prepend(newItem); // Add to the top
       updateNumbers();
-      saveList();
     }
 
     // Load the saved list when the page loads
