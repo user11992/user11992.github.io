@@ -226,68 +226,81 @@
 
     // Function to save the list state to localStorage
     function saveList() {
-      const items = [];
-      const listItems = sortableList.getElementsByTagName('li');
-      for (let i = 0; i < listItems.length; i++) {
-        const item = listItems[i];
-        const titleCheckbox = item.querySelector('.title-row .checkbox');
-        const titleText = item.querySelector('.title-row .editable').innerText;
-        const notesText = item.querySelector('.notes .editable').innerText;
-        const sublistItems = item.querySelectorAll('.sublist li');
-        const sublist = [];
-        sublistItems.forEach(subItem => {
-          const subCheckbox = subItem.querySelector('.checkbox');
-          const subText = subItem.querySelector('.editable').innerText;
-          sublist.push({
-            text: subText,
-            checked: subCheckbox.checked
+      try {
+        const items = [];
+        const listItems = sortableList.getElementsByTagName('li');
+        for (let i = 0; i < listItems.length; i++) {
+          const item = listItems[i];
+          const titleCheckbox = item.querySelector('.title-row .checkbox');
+          const titleText = item.querySelector('.title-row .editable').innerText;
+          const notesText = item.querySelector('.notes .editable').innerText;
+          const sublistItems = item.querySelectorAll('.sublist li');
+          const sublist = [];
+          sublistItems.forEach(subItem => {
+            const subCheckbox = subItem.querySelector('.checkbox');
+            const subText = subItem.querySelector('.editable').innerText;
+            sublist.push({
+              text: subText,
+              checked: subCheckbox.checked
+            });
           });
-        });
-        items.push({
-          title: titleText,
-          titleChecked: titleCheckbox.checked,
-          notes: notesText,
-          sublist: sublist
-        });
+          items.push({
+            title: titleText,
+            titleChecked: titleCheckbox.checked,
+            notes: notesText,
+            sublist: sublist
+          });
+        }
+        localStorage.setItem('draggableList', JSON.stringify(items));
+        console.log('List saved to localStorage:', items);
+      } catch (error) {
+        console.error('Error saving list to localStorage:', error);
       }
-      localStorage.setItem('draggableList', JSON.stringify(items));
     }
 
     // Function to load the list state from localStorage
     function loadList() {
-      const savedItems = localStorage.getItem('draggableList');
-      if (savedItems) {
-        const items = JSON.parse(savedItems);
-        sortableList.innerHTML = ''; // Clear the default list
-        items.forEach((item, index) => {
-          const newItem = document.createElement('li');
-          newItem.innerHTML = `
-            <div class="title-row">
-              <input type="checkbox" class="checkbox" ${item.titleChecked ? 'checked' : ''} onchange="toggleItalic(this); saveList()">
-              <span class="number">${index + 1}. </span><span class="editable" contenteditable="true" oninput="saveList()">${item.title}</span>
-            </div>
-            <div class="notes">
-              <span class="editable" contenteditable="true" oninput="saveList()">${item.notes}</span>
-            </div>
-            <ul class="sublist">
-              ${item.sublist.map(sub => `
-                <li>
-                  <input type="checkbox" class="checkbox" ${sub.checked ? 'checked' : ''} onchange="toggleItalic(this); saveList()">
-                  <span class="editable" contenteditable="true" oninput="saveList()">${sub.text}</span>
-                </li>
-              `).join('')}
-            </ul>
-          `;
-          sortableList.appendChild(newItem);
-          // Re-apply italic style to checked items
-          const checkboxes = newItem.querySelectorAll('.checkbox');
-          checkboxes.forEach(checkbox => {
-            if (checkbox.checked) {
-              const editableText = checkbox.nextElementSibling.nextElementSibling || checkbox.nextElementSibling;
-              editableText.classList.add('italic');
-            }
+      try {
+        const savedItems = localStorage.getItem('draggableList');
+        if (savedItems) {
+          const items = JSON.parse(savedItems);
+          console.log('List loaded from localStorage:', items);
+          sortableList.innerHTML = ''; // Clear the default list
+          items.forEach((item, index) => {
+            const newItem = document.createElement('li');
+            newItem.innerHTML = `
+              <div class="title-row">
+                <input type="checkbox" class="checkbox" ${item.titleChecked ? 'checked' : ''} onchange="toggleItalic(this); saveList()">
+                <span class="number">${index + 1}. </span><span class="editable" contenteditable="true" oninput="saveList()">${item.title}</span>
+              </div>
+              <div class="notes">
+                <span class="editable" contenteditable="true" oninput="saveList()">${item.notes}</span>
+              </div>
+              <ul class="sublist">
+                ${item.sublist.map(sub => `
+                  <li>
+                    <input type="checkbox" class="checkbox" ${sub.checked ? 'checked' : ''} onchange="toggleItalic(this); saveList()">
+                    <span class="editable" contenteditable="true" oninput="saveList()">${sub.text}</span>
+                  </li>
+                `).join('')}
+              </ul>
+            `;
+            sortableList.appendChild(newItem);
+            // Re-apply italic style to checked items
+            const checkboxes = newItem.querySelectorAll('.checkbox');
+            checkboxes.forEach(checkbox => {
+              if (checkbox.checked) {
+                const editableText = checkbox.nextElementSibling.nextElementSibling || checkbox.nextElementSibling;
+                editableText.classList.add('italic');
+              }
+            });
           });
-        });
+        } else {
+          console.log('No saved list found in localStorage.');
+          saveList(); // Save the default list if nothing is found
+        }
+      } catch (error) {
+        console.error('Error loading list from localStorage:', error);
       }
     }
 
