@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editable Draggable List Tool with Checkboxes and Notes</title>
+  <title>Account Marketing List</title>
   <style>
     #sortable-list {
       list-style: none;
@@ -17,6 +17,9 @@
       margin-bottom: 5px;
       background-color: #f9f9f9;
       cursor: move;
+    }
+    h1 {
+      text-align: center;
     }
     .sublist {
       list-style: none;
@@ -50,10 +53,16 @@
       background-color: #45a049;
     }
     .remove-btn {
-      background-color: #e74c3c;
+      background: none;
+      border: none;
+      color: #666;
+      cursor: pointer;
+      font-size: 0.9em;
+      margin-left: 5px;
+      padding: 0;
     }
     .remove-btn:hover {
-      background-color: #c0392b;
+      color: #e74c3c;
     }
     .checkbox {
       margin-right: 10px;
@@ -67,29 +76,33 @@
       margin-bottom: 10px;
       font-weight: bold;
     }
-    .number {
-      margin-right: 5px;
-    }
     .sublist li {
       display: flex;
       align-items: center;
       margin: 5px 0;
+      cursor: move;
     }
     .controls {
       text-align: center;
     }
+    #last-save {
+      text-align: center;
+      font-size: 0.8em;
+      color: #666;
+      margin: 5px 0;
+    }
   </style>
 </head>
 <body>
-  <h1>Editable Draggable List Tool with Checkboxes and Notes</h1>
+  <h1>Account Marketing List</h1>
   <div class="controls">
     <button onclick="addNewItem()">Add New Item</button>
     <button onclick="saveList()">Save Changes</button>
   </div>
+  <div id="last-save">Last saved: Not yet saved</div>
   <ul id="sortable-list">
     <li>
       <div class="title-row">
-        <span class="number">1. </span>
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">CORRIVEAU, DANNY</span>
       </div>
@@ -100,39 +113,38 @@
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">QUOTE LP OWNED BY DANNY AND MIL AS STR MANAGED BY PROP MGT CO</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">FRONTLINE - OVER 6BR MUST BE REVIEWED BY UW, TENT QUOTE $6,449</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">AM INT - QUOTED ALREADY</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">ORCHID</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">AMWINS</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">THIGH</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
       </ul>
       <button onclick="addSubItem(this)">Add Sub-Item</button>
     </li>
     <li>
       <div class="title-row">
-        <span class="number">2. </span>
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">VACHET, FARREN</span>
       </div>
@@ -143,44 +155,43 @@
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">QUOTE AUTO/UMB AND HOME, DONE?</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">PROGRESSIVE - QUOTED</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">RLI - QUOTED</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">MERCURY - SUBMITTED</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">OLYMPUS - DECLINED MUST BE MASONRY PIERS</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">THIG - OLDER THAN 2005 INELIGIBLE FOR WOOD PILINGS</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">FRONTLINE - QUOTED</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
       </ul>
       <button onclick="addSubItem(this)">Add Sub-Item</button>
     </li>
     <li>
       <div class="title-row">
-        <span class="number">3. </span>
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">ELWYN, TASH</span>
       </div>
@@ -191,14 +202,13 @@
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">X-WIND QUOTES NEEDED, AND EXCESS FLOOD QUOTES NEEDED, REFER TO HIS EMAIL, DONE?</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
       </ul>
       <button onclick="addSubItem(this)">Add Sub-Item</button>
     </li>
     <li>
       <div class="title-row">
-        <span class="number">4. </span>
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
       </div>
@@ -209,22 +219,22 @@
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">CLIENT SENT INFO, GETTING WATER SECURITY QUOTE TO INSTALL, SUBMITTED TO CHUBB/PURE, HEAR?</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">CHUBB - SENT FOR REVIEW</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">PURE - SENT FOR REVIEW</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">SLIDE - INCUMBENT</span>
-          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+          <button class="remove-btn" onclick="removeSubItem(this)">x</button>
         </li>
       </ul>
       <button onclick="addSubItem(this)">Add Sub-Item</button>
@@ -234,25 +244,29 @@
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
   <script>
     const sortableList = document.getElementById('sortable-list');
+    const lastSaveDisplay = document.getElementById('last-save');
     const BACKEND_URL = "https://draggable-list-backend.glitch.me"; // Replace with your Glitch project URL
 
-    // Initialize SortableJS for drag-and-drop
+    // Initialize SortableJS for main list drag-and-drop
     new Sortable(sortableList, {
       animation: 150,
       onEnd: function (evt) {
-        updateNumbers();
+        // No need to update numbers since they are removed
       }
     });
 
-    // Function to update numbering progressively (1, 2, 3, 4, etc.)
-    function updateNumbers() {
-      const items = sortableList.getElementsByTagName('li');
-      for (let i = 0; i < items.length; i++) {
-        const numberSpan = items[i].querySelector('.number');
-        if (numberSpan) {
-          numberSpan.textContent = `${i + 1}. `;
-        }
-      }
+    // Initialize SortableJS for each sublist
+    function initializeSublistSorting() {
+      const sublists = document.querySelectorAll('.sublist');
+      sublists.forEach(sublist => {
+        new Sortable(sublist, {
+          animation: 150,
+          group: sublist, // Restrict dragging to within the same sublist
+          onEnd: function (evt) {
+            // No additional action needed after reordering sub-items
+          }
+        });
+      });
     }
 
     // Function to toggle lighter gray color for the specific item
@@ -273,9 +287,10 @@
       newSubItem.innerHTML = `
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">New sub-item...</span>
-        <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+        <button class="remove-btn" onclick="removeSubItem(this)">x</button>
       `;
       sublist.appendChild(newSubItem);
+      initializeSublistSorting(); // Re-initialize sorting for the updated sublist
     }
 
     // Function to remove a sub-item
@@ -350,6 +365,9 @@
         });
         const result = await response.json();
         if (response.ok) {
+          const now = new Date();
+          const lastSaveTime = now.toLocaleString();
+          lastSaveDisplay.textContent = `Last saved: ${lastSaveTime}`;
           alert('List saved successfully!');
         } else {
           throw new Error(result.error || 'Failed to save list');
@@ -370,11 +388,10 @@
         }
         if (items && Array.isArray(items) && items.length > 0) {
           sortableList.innerHTML = ''; // Clear the default list
-          items.forEach((item, index) => {
+          items.forEach((item) => {
             const newItem = document.createElement('li');
             newItem.innerHTML = `
               <div class="title-row">
-                <span class="number">${index + 1}. </span>
                 <input type="checkbox" class="checkbox" ${item.titleChecked ? 'checked' : ''} onchange="toggleGray(this)">
                 <span class="editable" contenteditable="true">${item.title}</span>
               </div>
@@ -386,7 +403,7 @@
                   <li>
                     <input type="checkbox" class="checkbox" ${sub.checked ? 'checked' : ''} onchange="toggleGray(this)">
                     <span class="editable" contenteditable="true">${sub.text}</span>
-                    <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+                    <button class="remove-btn" onclick="removeSubItem(this)">x</button>
                   </li>
                 `).join('')}
               </ul>
@@ -402,11 +419,11 @@
               }
             });
           });
-          updateNumbers(); // Ensure numbers are correct after loading
         }
+        initializeSublistSorting(); // Initialize sorting after loading
       } catch (error) {
         console.error('Error loading list:', error);
-        updateNumbers(); // Ensure numbers are correct even if loading fails
+        initializeSublistSorting(); // Initialize sorting even if loading fails
       }
     }
 
@@ -415,7 +432,6 @@
       const newItem = document.createElement('li');
       newItem.innerHTML = `
         <div class="title-row">
-          <span class="number">1. </span>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">New Item</span>
         </div>
@@ -426,13 +442,13 @@
           <li>
             <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
             <span class="editable" contenteditable="true">Add details here...</span>
-            <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+            <button class="remove-btn" onclick="removeSubItem(this)">x</button>
           </li>
         </ul>
         <button onclick="addSubItem(this)">Add Sub-Item</button>
       `;
       sortableList.prepend(newItem); // Add to the top
-      updateNumbers();
+      initializeSublistSorting(); // Re-initialize sorting for the new sublist
     }
 
     // Load the saved list when the page loads
