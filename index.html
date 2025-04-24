@@ -102,6 +102,7 @@
     <button onclick="addNewItem()">Add New Item</button>
     <button onclick="saveList()">Save Changes</button>
     <button onclick="undoAction()">Undo</button>
+    <button onclick="redoAction()">Redo</button>
   </div>
   <div id="last-save">Last saved: Not yet saved</div>
   <ul id="sortable-list">
@@ -256,7 +257,8 @@
     const BACKEND_URL = "https://draggable-list-backend.glitch.me"; // Replace with your Glitch project URL
     let itemCounter = sortableList.children.length; // For generating unique IDs
     const undoStack = []; // Stack to store previous states for undo
-    const MAX_UNDO_STEPS = 10; // Limit undo history to prevent excessive memory usage
+    const redoStack = []; // Stack to store states for redo
+    const MAX_UNDO_STEPS = 10; // Limit undo/redo history to prevent excessive memory usage
 
     // Initialize SortableJS for main list drag-and-drop
     new Sortable(sortableList, {
@@ -298,6 +300,7 @@
       if (undoStack.length > MAX_UNDO_STEPS) {
         undoStack.shift(); // Remove oldest state to limit stack size
       }
+      redoStack.length = 0; // Clear redo stack on new action
     }
 
     // Function to undo the last action
@@ -306,9 +309,30 @@
         alert('Nothing to undo!');
         return;
       }
+      const currentState = getListState();
+      redoStack.push(JSON.parse(JSON.stringify(currentState))); // Save current state for redo
+      if (redoStack.length > MAX_UNDO_STEPS) {
+        redoStack.shift(); // Remove oldest redo state to limit stack size
+      }
       const previousState = undoStack.pop();
       renderListFromState(previousState);
       initializeSublistSorting(); // Re-initialize sorting after undoing
+    }
+
+    // Function to redo the last undone action
+    function redoAction() {
+      if (redoStack.length === 0) {
+        alert('Nothing to redo!');
+        return;
+      }
+      const currentState = getListState();
+      undoStack.push(JSON.parse(JSON.stringify(currentState))); // Save current state for undo
+      if (undoStack.length > MAX_UNDO_STEPS) {
+        undoStack.shift(); // Remove oldest undo state to limit stack size
+      }
+      const nextState = redoStack.pop();
+      renderListFromState(nextState);
+      initializeSublistSorting(); // Re-initialize sorting after redoing
     }
 
     // Function to render the list from a given state
@@ -461,6 +485,7 @@
           lastSaveDisplay.textContent = `Last saved: ${lastSaveTime}`;
           alert('List saved successfully!');
           undoStack.length = 0; // Clear undo stack after saving to backend
+          redoStack.length = 0; // Clear redo stack after saving to backend
         } else {
           throw new Error(result.error || 'Failed to save list');
         }
