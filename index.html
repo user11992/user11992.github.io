@@ -114,7 +114,10 @@
       background-color: #fff3cd; /* Yellow for Waiting for Client */
     }
     .title-row.action-required {
-      background-color: #d4edda; /* Green for Action Required */
+      background-color: #f8d7da; /* Light red for Action Required */
+    }
+    .title-row.completed {
+      background-color: #d4edda; /* Green for Completed */
     }
     .sublist li {
       display: flex;
@@ -145,6 +148,7 @@
           <option value="default">Select Status</option>
           <option value="waiting">Waiting for Client</option>
           <option value="action-required">Action Required</option>
+          <option value="completed">Completed</option>
         </select>
         <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
       </div>
@@ -193,6 +197,7 @@
           <option value="default">Select Status</option>
           <option value="waiting">Waiting for Client</option>
           <option value="action-required">Action Required</option>
+          <option value="completed">Completed</option>
         </select>
         <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
       </div>
@@ -246,6 +251,7 @@
           <option value="default">Select Status</option>
           <option value="waiting">Waiting for Client</option>
           <option value="action-required">Action Required</option>
+          <option value="completed">Completed</option>
         </select>
         <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
       </div>
@@ -269,6 +275,7 @@
           <option value="default">Select Status</option>
           <option value="waiting">Waiting for Client</option>
           <option value="action-required">Action Required</option>
+          <option value="completed">Completed</option>
         </select>
         <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
       </div>
@@ -348,11 +355,13 @@
     function updateItemHighlightColor(dropdown) {
       const titleRow = dropdown.parentElement; // .title-row
       const status = dropdown.value;
-      titleRow.classList.remove('waiting', 'action-required');
+      titleRow.classList.remove('waiting', 'action-required', 'completed');
       if (status === 'waiting') {
         titleRow.classList.add('waiting');
       } else if (status === 'action-required') {
         titleRow.classList.add('action-required');
+      } else if (status === 'completed') {
+        titleRow.classList.add('completed');
       }
     }
 
@@ -414,6 +423,7 @@
               <option value="default" ${item.status === 'default' || !item.status ? 'selected' : ''}>Select Status</option>
               <option value="waiting" ${item.status === 'waiting' ? 'selected' : ''}>Waiting for Client</option>
               <option value="action-required" ${item.status === 'action-required' ? 'selected' : ''}>Action Required</option>
+              <option value="completed" ${item.status === 'completed' ? 'selected' : ''}>Completed</option>
             </select>
             <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
           </div>
@@ -593,6 +603,7 @@
                   <option value="default" ${item.status === 'default' || !item.status ? 'selected' : ''}>Select Status</option>
                   <option value="waiting" ${item.status === 'waiting' ? 'selected' : ''}>Waiting for Client</option>
                   <option value="action-required" ${item.status === 'action-required' ? 'selected' : ''}>Action Required</option>
+                  <option value="completed" ${item.status === 'completed' ? 'selected' : ''}>Completed</option>
                 </select>
                 <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
               </div>
@@ -645,6 +656,7 @@
             <option value="default">Select Status</option>
             <option value="waiting">Waiting for Client</option>
             <option value="action-required">Action Required</option>
+            <option value="completed">Completed</option>
           </select>
           <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
         </div>
