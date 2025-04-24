@@ -11,17 +11,15 @@
       max-width: 600px;
       margin: 20px auto;
     }
-    #sortable-list li {
+    #sortable-list > li {
       padding: 10px;
       border: 1px solid #ccc;
       margin-bottom: 5px;
       background-color: #f9f9f9;
       cursor: move;
-      display: flex;
-      align-items: center;
     }
-    #sortable-list ul {
-      list-style-type: disc;
+    .sublist {
+      list-style: none;
       padding-left: 20px;
     }
     .editable {
@@ -51,6 +49,16 @@
       text-decoration: line-through;
       color: #888;
     }
+    .title-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .sublist li {
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
+    }
   </style>
 </head>
 <body>
@@ -58,45 +66,107 @@
   <button onclick="addNewItem()">Add New Item</button>
   <ul id="sortable-list">
     <li>
-      <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
-      <span class="number">1. </span><span class="editable" contenteditable="true">CORRIVEAU, DANNY</span>
-      <ul>
-        <li><span class="editable" contenteditable="true">QUOTE LP OWNED BY DANNY AND MIL AS STR MANAGED BY PROP MGT CO</span></li>
-        <li><span class="editable" contenteditable="true">FRONTLINE - OVER 6BR MUST BE REVIEWED BY UW, TENT QUOTE $6,449</span></li>
-        <li><span class="editable" contenteditable="true">AM INT - QUOTED ALREADY</span></li>
-        <li><span class="editable" contenteditable="true">ORCHID</span></li>
-        <li><span class="editable" contenteditable="true">AMWINS</span></li>
-        <li><span class="editable" contenteditable="true">THIGH</span></li>
+      <div class="title-row">
+        <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+        <span class="number">1. </span><span class="editable" contenteditable="true">CORRIVEAU, DANNY</span>
+      </div>
+      <ul class="sublist">
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">QUOTE LP OWNED BY DANNY AND MIL AS STR MANAGED BY PROP MGT CO</span>
+        </li>
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">FRONTLINE - OVER 6BR MUST BE REVIEWED BY UW, TENT QUOTE $6,449</span>
+        </li>
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">AM INT - QUOTED ALREADY</span>
+        </li>
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">ORCHID</span>
+        </li>
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">AMWINS</span>
+        </li>
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">THIGH</span>
+        </li>
       </ul>
     </li>
     <li>
-      <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
-      <span class="number">2. </span><span class="editable" contenteditable="true">VACHET, FARREN</span>
-      <ul>
-        <li><span class="editable" contenteditable="true">QUOTE AUTO/UMB AND HOME, DONE?</span></li>
-        <li><span class="editable" contenteditable="true">PROGRESSIVE - QUOTED</span></li>
-        <li><span class="editable" contenteditable="true">RLI - QUOTED</span></li>
-        <li><span class="editable" contenteditable="true">MERCURY - SUBMITTED</span></li>
-        <li><span class="editable" contenteditable="true">OLYMPUS - DECLINED MUST BE MASONRY PIERS</span></li>
-        <li><span class="editable" contenteditable="true">THIG - OLDER THAN 2005 INELIGIBLE FOR WOOD PILINGS</span></li>
-        <li><span class="editable" contenteditable="true">FRONTLINE - QUOTED</span></li>
+      <div class="title-row">
+        <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+        <span class="number">2. </span><span class="editable" contenteditable="true">VACHET, FARREN</span>
+      </div>
+      <ul class="sublist">
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">QUOTE AUTO/UMB AND HOME, DONE?</span>
+        </li>
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">PROGRESSIVE - QUOTED</span>
+        </li>
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">RLI - QUOTED</span>
+        </li>
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">MERCURY - SUBMITTED</span>
+        </li>
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">OLYMPUS - DECLINED MUST BE MASONRY PIERS</span>
+        </li>
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">THIG - OLDER THAN 2005 INELIGIBLE FOR WOOD PILINGS</span>
+        </li>
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">FRONTLINE - QUOTED</span>
+        </li>
       </ul>
     </li>
     <li>
-      <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
-      <span class="number">3. </span><span class="editable" contenteditable="true">ELWYN, TASH</span>
-      <ul>
-        <li><span class="editable" contenteditable="true">X-WIND QUOTES NEEDED, AND EXCESS FLOOD QUOTES NEEDED, REFER TO HIS EMAIL, DONE?</span></li>
+      <div class="title-row">
+        <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+        <span class="number">3. </span><span class="editable" contenteditable="true">ELWYN, TASH</span>
+      </div>
+      <ul class="sublist">
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">X-WIND QUOTES NEEDED, AND EXCESS FLOOD QUOTES NEEDED, REFER TO HIS EMAIL, DONE?</span>
+        </li>
       </ul>
     </li>
     <li>
-      <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
-      <span class="number">4. </span><span class="editable" contenteditable="true">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
-      <ul>
-        <li><span class="editable" contenteditable="true">CLIENT SENT INFO, GETTING WATER SECURITY QUOTE TO INSTALL, SUBMITTED TO CHUBB/PURE, HEAR?</span></li>
-        <li><span class="editable" contenteditable="true">CHUBB - SENT FOR REVIEW</span></li>
-        <li><span class="editable" contenteditable="true">PURE - SENT FOR REVIEW</span></li>
-        <li><span class="editable" contenteditable="true">SLIDE - INCUMBENT</span></li>
+      <div class="title-row">
+        <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+        <span class="number">4. </span><span class="editable" contenteditable="true">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
+      </div>
+      <ul class="sublist">
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">CLIENT SENT INFO, GETTING WATER SECURITY QUOTE TO INSTALL, SUBMITTED TO CHUBB/PURE, HEAR?</span>
+        </li>
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">CHUBB - SENT FOR REVIEW</span>
+        </li>
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">PURE - SENT FOR REVIEW</span>
+        </li>
+        <li>
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="editable" contenteditable="true">SLIDE - INCUMBENT</span>
+        </li>
       </ul>
     </li>
   </ul>
@@ -126,7 +196,7 @@
 
     // Function to toggle the "completed" style when checkbox is clicked
     function toggleCompleted(checkbox) {
-      const listItem = checkbox.parentElement;
+      const listItem = checkbox.parentElement.parentElement;
       if (checkbox.checked) {
         listItem.classList.add('completed');
       } else {
@@ -140,10 +210,15 @@
       const itemCount = sortableList.getElementsByTagName('li').length + 1;
       
       newItem.innerHTML = `
-        <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
-        <span class="number">${itemCount}. </span><span class="editable" contenteditable="true">New Item</span>
-        <ul>
-          <li><span class="editable" contenteditable="true">Add details here...</span></li>
+        <div class="title-row">
+          <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+          <span class="number">${itemCount}. </span><span class="editable" contenteditable="true">New Item</span>
+        </div>
+        <ul class="sublist">
+          <li>
+            <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
+            <span class="editable" contenteditable="true">Add details here...</span>
+          </li>
         </ul>
       `;
       
