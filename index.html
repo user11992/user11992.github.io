@@ -162,7 +162,6 @@
   <ul id="sortable-list">
     <li data-id="item-1">
       <div class="title-row">
-        <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">CORRIVEAU, DANNY</span>
         <select class="status-select" onchange="updateItemHighlightColor(this)">
           <option value="default">Select Status</option>
@@ -211,7 +210,6 @@
     </li>
     <li data-id="item-2">
       <div class="title-row">
-        <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">VACHET, FARREN</span>
         <select class="status-select" onchange="updateItemHighlightColor(this)">
           <option value="default">Select Status</option>
@@ -265,7 +263,6 @@
     </li>
     <li data-id="item-3">
       <div class="title-row">
-        <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">ELWYN, TASH</span>
         <select class="status-select" onchange="updateItemHighlightColor(this)">
           <option value="default">Select Status</option>
@@ -289,7 +286,6 @@
     </li>
     <li data-id="item-4">
       <div class="title-row">
-        <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
         <select class="status-select" onchange="updateItemHighlightColor(this)">
           <option value="default">Select Status</option>
@@ -403,6 +399,16 @@
       }
     });
 
+    // Function to toggle lighter gray color for sublist items
+    function toggleGray(checkbox) {
+      const editableText = checkbox.nextElementSibling;
+      if (checkbox.checked) {
+        editableText.classList.add('lighter-gray');
+      } else {
+        editableText.classList.remove('lighter-gray');
+      }
+    }
+
     // Function to save the current state for undo
     function saveStateForUndo() {
       const state = getListState();
@@ -455,7 +461,6 @@
         newItem.setAttribute('data-id', `item-${itemCounter}`);
         newItem.innerHTML = `
           <div class="title-row">
-            <input type="checkbox" class="checkbox" ${item.titleChecked ? 'checked' : ''} onchange="toggleGray(this)">
             <span class="editable" contenteditable="true">${item.title}</span>
             <select class="status-select" onchange="updateItemHighlightColor(this)">
               <option value="default" ${item.status === 'default' || !item.status ? 'selected' : ''}>Select Status</option>
@@ -480,7 +485,7 @@
           <button onclick="addSubItem(this)">Add Item</button>
         `;
         sortableList.appendChild(newItem);
-        // Re-apply lighter gray style to checked items
+        // Re-apply lighter gray style to checked sublist items
         const checkboxes = newItem.querySelectorAll('.checkbox');
         checkboxes.forEach(checkbox => {
           if (checkbox.checked) {
@@ -492,16 +497,6 @@
         const dropdown = newItem.querySelector('.status-select');
         updateItemHighlightColor(dropdown);
       });
-    }
-
-    // Function to toggle lighter gray color for the specific item
-    function toggleGray(checkbox) {
-      const editableText = checkbox.nextElementSibling;
-      if (checkbox.checked) {
-        editableText.classList.add('lighter-gray');
-      } else {
-        editableText.classList.remove('lighter-gray');
-      }
     }
 
     // Function to delete a main list item
@@ -539,16 +534,14 @@
       const listItems = sortableList.getElementsByTagName('li');
       for (let i = 0; i < listItems.length; i++) {
         const item = listItems[i];
-        const titleCheckbox = item.querySelector('.title-row .checkbox');
         const titleElement = item.querySelector('.title-row .editable');
         const notesElement = item.querySelector('.notes .editable');
         const statusSelect = item.querySelector('.status-select');
         const sublistItems = item.querySelectorAll('.sublist li');
 
         // Check if required elements exist
-        if (!titleCheckbox || !titleElement || !notesElement || !statusSelect) {
+        if (!titleElement || !notesElement || !statusSelect) {
           console.warn(`Skipping item ${i} due to missing elements:`, {
-            titleCheckbox: !!titleCheckbox,
             titleElement: !!titleElement,
             notesElement: !!notesElement,
             statusSelect: !!statusSelect
@@ -578,7 +571,6 @@
 
         items.push({
           title: titleText,
-          titleChecked: titleCheckbox.checked,
           notes: notesText,
           status: status,
           sublist: sublist
@@ -635,7 +627,6 @@
             newItem.setAttribute('data-id', `item-${itemCounter}`);
             newItem.innerHTML = `
               <div class="title-row">
-                <input type="checkbox" class="checkbox" ${item.titleChecked ? 'checked' : ''} onchange="toggleGray(this)">
                 <span class="editable" contenteditable="true">${item.title}</span>
                 <select class="status-select" onchange="updateItemHighlightColor(this)">
                   <option value="default" ${item.status === 'default' || !item.status ? 'selected' : ''}>Select Status</option>
@@ -660,7 +651,7 @@
               <button onclick="addSubItem(this)">Add Item</button>
             `;
             sortableList.appendChild(newItem);
-            // Re-apply lighter gray style to checked items
+            // Re-apply lighter gray style to checked sublist items
             const checkboxes = newItem.querySelectorAll('.checkbox');
             checkboxes.forEach(checkbox => {
               if (checkbox.checked) {
