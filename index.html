@@ -76,7 +76,7 @@
       align-items: center;
       margin-bottom: 10px;
       font-weight: bold;
-      background-color: #e6f0fa; /* Highlight only the title row */
+      background-color: #e6f0fa;
       padding: 5px;
     }
     .sublist li {
@@ -101,6 +101,7 @@
   <div class="controls">
     <button onclick="addNewItem()">Add New Item</button>
     <button onclick="saveList()">Save Changes</button>
+    <button onclick="undoAction()">Undo</button>
   </div>
   <div id="last-save">Last saved: Not yet saved</div>
   <ul id="sortable-list">
@@ -254,12 +255,17 @@
     const lastSaveDisplay = document.getElementById('last-save');
     const BACKEND_URL = "https://draggable-list-backend.glitch.me"; // Replace with your Glitch project URL
     let itemCounter = sortableList.children.length; // For generating unique IDs
+    const undoStack = []; // Stack to store previous states for undo
+    const MAX_UNDO_STEPS = 10; // Limit undo history to prevent excessive memory usage
 
     // Initialize SortableJS for main list drag-and-drop
     new Sortable(sortableList, {
       animation: 150,
+      onStart: function (evt) {
+        saveStateForUndo(); // Save state before reordering
+      },
       onEnd: function (evt) {
-        // No action needed after reordering main items
+        // State is already saved before the action
       }
     });
 
@@ -274,9 +280,72 @@
         }
         sublist.sortable = new Sortable(sublist, {
           animation: 150,
-          group: groupId, // Restrict dragging to within the same sublist
+          group: groupId,
+          onStart: function (evt) {
+            saveStateForUndo(); // Save state before reordering
+          },
           onEnd: function (evt) {
-            // No additional action needed after reordering sub-items
+            // State is already saved before the action
+          }
+        });
+      });
+    }
+
+    // Function to save the current state for undo
+    function saveStateForUndo() {
+      const state = getListState();
+      undoStack.push(JSON.parse(JSON.stringify(state))); // Deep copy to avoid reference issues
+      if (undoStack.length > MAX_UNDO_STEPS) {
+        undoStack.shift(); // Remove oldest state to limit stack size
+      }
+    }
+
+    // Function to undo the last action
+    function undoAction() {
+      if (undoStack.length === 0) {
+        alert('Nothing to undo!');
+        return;
+      }
+      const previousState = undoStack.pop();
+      renderListFromState(previousState);
+      initializeSublistSorting(); // Re-initialize sorting after undoing
+    }
+
+    // Function to render the list from a given state
+    function renderListFromState(state) {
+      sortableList.innerHTML = ''; // Clear the current list
+      itemCounter = 0; // Reset counter for new items
+      state.forEach((item) => {
+        itemCounter++;
+        const newItem = document.createElement('li');
+        newItem.setAttribute('data-id', `item-${itemCounter}`);
+        newItem.innerHTML = `
+          <div class="title-row">
+            <input type="checkbox" class="checkbox" ${item.titleChecked ? 'checked' : ''} onchange="toggleGray(this)">
+            <span class="editable" contenteditable="true">${item.title}</span>
+            <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
+          </div>
+          <div class="notes">
+            <span class="editable" contenteditable="true">${item.notes}</span>
+          </div>
+          <ul class="sublist" data-group="sublist-item-${itemCounter}">
+            ${item.sublist.map(sub => `
+              <li>
+                <input type="checkbox" class="checkbox" ${sub.checked ? 'checked' : ''} onchange="toggleGray(this)">
+                <span class="editable" contenteditable="true">${sub.text}</span>
+                <button class="remove-btn" onclick="removeSubItem(this)">x</button>
+              </li>
+            `).join('')}
+          </ul>
+          <button onclick="addSubItem(this)">Add Item</button>
+        `;
+        sortableList.appendChild(newItem);
+        // Re-apply lighter gray style to checked items
+        const checkboxes = newItem.querySelectorAll('.checkbox');
+        checkboxes.forEach(checkbox => {
+          if (checkbox.checked) {
+            const editableText = checkbox.nextElementSibling;
+            editableText.classList.add('lighter-gray');
           }
         });
       });
@@ -294,12 +363,14 @@
 
     // Function to delete a main list item
     function deleteMainItem(button) {
+      saveStateForUndo(); // Save state before deletion
       const mainItem = button.parentElement.parentElement; // .title-row -> <li>
       mainItem.remove();
     }
 
     // Function to add a new sub-item
     function addSubItem(button) {
+      saveStateForUndo(); // Save state before adding
       const mainItem = button.parentElement;
       const sublist = mainItem.querySelector('.sublist');
       const newSubItem = document.createElement('li');
@@ -314,6 +385,7 @@
 
     // Function to remove a sub-item
     function removeSubItem(button) {
+      saveStateForUndo(); // Save state before deletion
       const subItem = button.parentElement;
       subItem.remove();
     }
@@ -388,6 +460,7 @@
           const lastSaveTime = now.toLocaleString();
           lastSaveDisplay.textContent = `Last saved: ${lastSaveTime}`;
           alert('List saved successfully!');
+          undoStack.length = 0; // Clear undo stack after saving to backend
         } else {
           throw new Error(result.error || 'Failed to save list');
         }
@@ -452,6 +525,7 @@
 
     // Function to add a new item at the top
     function addNewItem() {
+      saveStateForUndo(); // Save state before adding
       itemCounter++;
       const newItem = document.createElement('li');
       newItem.setAttribute('data-id', `item-${itemCounter}`);
