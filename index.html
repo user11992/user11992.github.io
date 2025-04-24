@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editable Draggable List Tool</title>
+  <title>Editable Draggable List Tool with Checkboxes</title>
   <style>
     #sortable-list {
       list-style: none;
@@ -17,6 +17,8 @@
       margin-bottom: 5px;
       background-color: #f9f9f9;
       cursor: move;
+      display: flex;
+      align-items: center;
     }
     #sortable-list ul {
       list-style-type: disc;
@@ -42,13 +44,21 @@
     button:hover {
       background-color: #45a049;
     }
+    .checkbox {
+      margin-right: 10px;
+    }
+    .completed .editable {
+      text-decoration: line-through;
+      color: #888;
+    }
   </style>
 </head>
 <body>
-  <h1>Editable Draggable List Tool</h1>
+  <h1>Editable Draggable List Tool with Checkboxes</h1>
   <button onclick="addNewItem()">Add New Item</button>
   <ul id="sortable-list">
     <li>
+      <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
       <span class="number">1. </span><span class="editable" contenteditable="true">CORRIVEAU, DANNY</span>
       <ul>
         <li><span class="editable" contenteditable="true">QUOTE LP OWNED BY DANNY AND MIL AS STR MANAGED BY PROP MGT CO</span></li>
@@ -60,6 +70,7 @@
       </ul>
     </li>
     <li>
+      <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
       <span class="number">2. </span><span class="editable" contenteditable="true">VACHET, FARREN</span>
       <ul>
         <li><span class="editable" contenteditable="true">QUOTE AUTO/UMB AND HOME, DONE?</span></li>
@@ -72,12 +83,14 @@
       </ul>
     </li>
     <li>
+      <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
       <span class="number">3. </span><span class="editable" contenteditable="true">ELWYN, TASH</span>
       <ul>
         <li><span class="editable" contenteditable="true">X-WIND QUOTES NEEDED, AND EXCESS FLOOD QUOTES NEEDED, REFER TO HIS EMAIL, DONE?</span></li>
       </ul>
     </li>
     <li>
+      <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
       <span class="number">4. </span><span class="editable" contenteditable="true">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
       <ul>
         <li><span class="editable" contenteditable="true">CLIENT SENT INFO, GETTING WATER SECURITY QUOTE TO INSTALL, SUBMITTED TO CHUBB/PURE, HEAR?</span></li>
@@ -111,12 +124,23 @@
       }
     }
 
+    // Function to toggle the "completed" style when checkbox is clicked
+    function toggleCompleted(checkbox) {
+      const listItem = checkbox.parentElement;
+      if (checkbox.checked) {
+        listItem.classList.add('completed');
+      } else {
+        listItem.classList.remove('completed');
+      }
+    }
+
     // Function to add a new item
     function addNewItem() {
       const newItem = document.createElement('li');
       const itemCount = sortableList.getElementsByTagName('li').length + 1;
       
       newItem.innerHTML = `
+        <input type="checkbox" class="checkbox" onchange="toggleCompleted(this)">
         <span class="number">${itemCount}. </span><span class="editable" contenteditable="true">New Item</span>
         <ul>
           <li><span class="editable" contenteditable="true">Add details here...</span></li>
