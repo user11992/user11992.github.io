@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editable Draggable List Tool with Checkboxes and Descriptions</title>
+  <title>Editable Draggable List Tool with Checkboxes, Notes, and Last Touchpoint</title>
   <style>
     #sortable-list {
       list-style: none;
@@ -30,13 +30,19 @@
     .editable:hover {
       background-color: #e0e0e0;
     }
-    .description {
+    .notes, .last-touchpoint {
       display: block;
       margin: 5px 0;
       padding: 5px;
+      font-size: 0.9em;
+    }
+    .notes {
+      background-color: #f0f4c3;
+      border-left: 3px solid #afb42b;
+    }
+    .last-touchpoint {
       background-color: #e8f0fe;
       border-left: 3px solid #4285f4;
-      font-size: 0.9em;
     }
     button {
       display: block;
@@ -69,7 +75,7 @@
   </style>
 </head>
 <body>
-  <h1>Editable Draggable List Tool with Checkboxes and Descriptions</h1>
+  <h1>Editable Draggable List Tool with Checkboxes, Notes, and Last Touchpoint</h1>
   <button onclick="addNewItem()">Add New Item</button>
   <ul id="sortable-list">
     <li>
@@ -77,8 +83,8 @@
         <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
         <span class="number">1. </span><span class="editable" contenteditable="true">CORRIVEAU, DANNY</span>
       </div>
-      <div class="description">
-        <span class="editable" contenteditable="true">Last touchpoint: Called on 4/20/25</span>
+      <div class="notes">
+        <span class="editable" contenteditable="true">Danny mentioned needing a follow-up on the quote next week.</span>
       </div>
       <ul class="sublist">
         <li>
@@ -106,14 +112,17 @@
           <span class="editable" contenteditable="true">THIGH</span>
         </li>
       </ul>
+      <div class="last-touchpoint">
+        <span class="editable" contenteditable="true">Last touchpoint: Called on 4/20/25</span>
+      </div>
     </li>
     <li>
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
         <span class="number">2. </span><span class="editable" contenteditable="true">VACHET, FARREN</span>
       </div>
-      <div class="description">
-        <span class="editable" contenteditable="true">Last touchpoint: Emailed on 4/22/25</span>
+      <div class="notes">
+        <span class="editable" contenteditable="true">Farren requested additional quotes for flood coverage.</span>
       </div>
       <ul class="sublist">
         <li>
@@ -145,14 +154,17 @@
           <span class="editable" contenteditable="true">FRONTLINE - QUOTED</span>
         </li>
       </ul>
+      <div class="last-touchpoint">
+        <span class="editable" contenteditable="true">Last touchpoint: Emailed on 4/22/25</span>
+      </div>
     </li>
     <li>
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
         <span class="number">3. </span><span class="editable" contenteditable="true">ELWYN, TASH</span>
       </div>
-      <div class="description">
-        <span class="editable" contenteditable="true">Last touchpoint: Awaiting response as of 4/23/25</span>
+      <div class="notes">
+        <span class="editable" contenteditable="true">Tash needs clarification on flood quote requirements.</span>
       </div>
       <ul class="sublist">
         <li>
@@ -160,14 +172,17 @@
           <span class="editable" contenteditable="true">X-WIND QUOTES NEEDED, AND EXCESS FLOOD QUOTES NEEDED, REFER TO HIS EMAIL, DONE?</span>
         </li>
       </ul>
+      <div class="last-touchpoint">
+        <span class="editable" contenteditable="true">Last touchpoint: Awaiting response as of 4/23/25</span>
+      </div>
     </li>
     <li>
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
         <span class="number">4. </span><span class="editable" contenteditable="true">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
       </div>
-      <div class="description">
-        <span class="editable" contenteditable="true">Last touchpoint: Submitted on 4/21/25</span>
+      <div class="notes">
+        <span class="editable" contenteditable="true">Nashana confirmed receipt of initial info.</span>
       </div>
       <ul class="sublist">
         <li>
@@ -187,6 +202,9 @@
           <span class="editable" contenteditable="true">SLIDE - INCUMBENT</span>
         </li>
       </ul>
+      <div class="last-touchpoint">
+        <span class="editable" contenteditable="true">Last touchpoint: Submitted on 4/21/25</span>
+      </div>
     </li>
   </ul>
 
@@ -233,8 +251,8 @@
           <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
           <span class="number">${itemCount}. </span><span class="editable" contenteditable="true">New Item</span>
         </div>
-        <div class="description">
-          <span class="editable" contenteditable="true">Last touchpoint: Add note here...</span>
+        <div class="notes">
+          <span class="editable" contenteditable="true">Add notes here...</span>
         </div>
         <ul class="sublist">
           <li>
@@ -242,6 +260,9 @@
             <span class="editable" contenteditable="true">Add details here...</span>
           </li>
         </ul>
+        <div class="last-touchpoint">
+          <span class="editable" contenteditable="true">Last touchpoint: Add note here...</span>
+        </div>
       `;
       
       sortableList.appendChild(newItem);
