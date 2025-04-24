@@ -236,18 +236,39 @@
       for (let i = 0; i < listItems.length; i++) {
         const item = listItems[i];
         const titleCheckbox = item.querySelector('.title-row .checkbox');
-        const titleText = item.querySelector('.title-row .editable').innerText;
-        const notesText = item.querySelector('.notes .editable').innerText;
+        const titleElement = item.querySelector('.title-row .editable');
+        const notesElement = item.querySelector('.notes .editable');
         const sublistItems = item.querySelectorAll('.sublist li');
+
+        // Check if required elements exist
+        if (!titleCheckbox || !titleElement || !notesElement) {
+          console.warn(`Skipping item ${i} due to missing elements:`, {
+            titleCheckbox: !!titleCheckbox,
+            titleElement: !!titleElement,
+            notesElement: !!notesElement
+          });
+          continue;
+        }
+
+        const titleText = titleElement.innerText || '';
+        const notesText = notesElement.innerText || '';
         const sublist = [];
-        sublistItems.forEach(subItem => {
+        sublistItems.forEach((subItem, subIndex) => {
           const subCheckbox = subItem.querySelector('.checkbox');
-          const subText = subItem.querySelector('.editable').innerText;
+          const subTextElement = subItem.querySelector('.editable');
+          if (!subCheckbox || !subTextElement) {
+            console.warn(`Skipping sub-item ${subIndex} in item ${i} due to missing elements:`, {
+              subCheckbox: !!subCheckbox,
+              subTextElement: !!subTextElement
+            });
+            return;
+          }
           sublist.push({
-            text: subText,
+            text: subTextElement.innerText || '',
             checked: subCheckbox.checked
           });
         });
+
         items.push({
           title: titleText,
           titleChecked: titleCheckbox.checked,
@@ -262,6 +283,9 @@
     async function saveList() {
       try {
         const listState = getListState();
+        if (listState.length === 0) {
+          throw new Error('No valid items to save');
+        }
         const response = await fetch(`${BACKEND_URL}/list`, {
           method: 'POST',
           headers: {
