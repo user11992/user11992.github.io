@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Draggable List Tool</title>
+  <style>
+    #sortable-list {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+    #sortable-list li {
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 5px;
+      background-color: #f9f9f9;
+      cursor: move;
+    }
+    #sortable-list ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Draggable List Tool</h1>
+  <ul id="sortable-list">
+    <li>1. CORRIVEAU, DANNY
+      <ul>
+        <li>QUOTE LP OWNED BY DANNY AND MIL AS STR MANAGED BY PROP MGT CO</li>
+        <li>FRONTLINE - OVER 6BR MUST BE REVIEWED BY UW, TENT QUOTE $6,449</li>
+        <li>AM INT - QUOTED ALREADY</li>
+        <li>ORCHID</li>
+        <li>AMWINS</li>
+        <li>THIGH</li>
+      </ul>
+    </li>
+    <li>2. VACHET, FARREN
+      <ul>
+        <li>QUOTE AUTO/UMB AND HOME, DONE?</li>
+        <li>PROGRESSIVE - QUOTED</li>
+        <li>RLI - QUOTED</li>
+        <li>MERCURY - SUBMITTED</li>
+        <li>OLYMPUS - DECLINED MUST BE MASONRY PIERS</li>
+        <li>THIG - OLDER THAN 2005 INELIGIBLE FOR WOOD PILINGS</li>
+        <li>FRONTLINE - QUOTED</li>
+      </ul>
+    </li>
+    <li>3. ELWYN, TASH
+      <ul>
+        <li>X-WIND QUOTES NEEDED, AND EXCESS FLOOD QUOTES NEEDED, REFER TO HIS EMAIL, DONE?</li>
+      </ul>
+    </li>
+    <li>4. ELLIOTT, NASHANA (CALL IN CHUBB)
+      <ul>
+        <li>CLIENT SENT INFO, GETTING WATER SECURITY QUOTE TO INSTALL, SUBMITTED TO CHUBB/PURE, HEAR?</li>
+        <li>CHUBB - SENT FOR REVIEW</li>
+        <li>PURE - SENT FOR REVIEW</li>
+        <li>SLIDE - INCUMBENT</li>
+      </ul>
+    </li>
+  </ul>
+
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+  <script>
+    const sortableList = document.getElementById('sortable-list');
+    new Sortable(sortableList, {
+      animation: 150,
+      onEnd: function (evt) {
+        const items = sortableList.getElementsByTagName('li');
+        for (let i = 0; i < items.length; i++) {
+          // Update numbering while preserving the rest of the text
+          const itemText = items[i].childNodes[0].textContent.split('. ')[1] || items[i].childNodes[0].textContent;
+          items[i].childNodes[0].textContent = `${i + 1}. ${itemText}`;
+        }
+      }
+    });
+  </script>
+</body>
+</html>
