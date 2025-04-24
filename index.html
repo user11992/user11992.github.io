@@ -15,7 +15,7 @@
       padding: 10px;
       border: 1px solid #ccc;
       margin-bottom: 5px;
-      background-color: #e6f0fa; /* Highlight background for main list items */
+      background-color: #f9f9f9;
       cursor: move;
     }
     h1 {
@@ -24,7 +24,7 @@
     .sublist {
       list-style: none;
       padding-left: 20px;
-      background-color: #f9f9f9; /* Keep sublist background distinct */
+      background-color: #f9f9f9;
     }
     .editable {
       display: inline-block;
@@ -53,7 +53,7 @@
     button:hover {
       background-color: #45a049;
     }
-    .remove-btn {
+    .delete-btn, .remove-btn {
       background: none;
       border: none;
       color: #666;
@@ -62,7 +62,7 @@
       margin-left: 5px;
       padding: 0;
     }
-    .remove-btn:hover {
+    .delete-btn:hover, .remove-btn:hover {
       color: #e74c3c;
     }
     .checkbox {
@@ -76,6 +76,8 @@
       align-items: center;
       margin-bottom: 10px;
       font-weight: bold;
+      background-color: #e6f0fa; /* Highlight only the title row */
+      padding: 5px;
     }
     .sublist li {
       display: flex;
@@ -106,6 +108,7 @@
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">CORRIVEAU, DANNY</span>
+        <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
       </div>
       <div class="notes">
         <span class="editable" contenteditable="true">Danny mentioned needing a follow-up on the quote next week.</span>
@@ -148,6 +151,7 @@
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">VACHET, FARREN</span>
+        <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
       </div>
       <div class="notes">
         <span class="editable" contenteditable="true">Farren requested additional quotes for flood coverage.</span>
@@ -195,6 +199,7 @@
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">ELWYN, TASH</span>
+        <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
       </div>
       <div class="notes">
         <span class="editable" contenteditable="true">Tash needs clarification on flood quote requirements.</span>
@@ -212,6 +217,7 @@
       <div class="title-row">
         <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
         <span class="editable" contenteditable="true">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
+        <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
       </div>
       <div class="notes">
         <span class="editable" contenteditable="true">Nashana confirmed receipt of initial info.</span>
@@ -284,6 +290,12 @@
       } else {
         editableText.classList.remove('lighter-gray');
       }
+    }
+
+    // Function to delete a main list item
+    function deleteMainItem(button) {
+      const mainItem = button.parentElement.parentElement; // .title-row -> <li>
+      mainItem.remove();
     }
 
     // Function to add a new sub-item
@@ -404,6 +416,7 @@
               <div class="title-row">
                 <input type="checkbox" class="checkbox" ${item.titleChecked ? 'checked' : ''} onchange="toggleGray(this)">
                 <span class="editable" contenteditable="true">${item.title}</span>
+                <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
               </div>
               <div class="notes">
                 <span class="editable" contenteditable="true">${item.notes}</span>
@@ -446,6 +459,7 @@
         <div class="title-row">
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">New Item</span>
+          <button class="delete-btn" onclick="deleteMainItem(this)">x</button>
         </div>
         <div class="notes">
           <span class="editable" contenteditable="true">Add notes here...</span>
