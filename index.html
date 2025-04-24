@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Editable Draggable List Tool with Checkboxes, Notes, and Last Touchpoint</title>
+  <title>Editable Draggable List Tool with Checkboxes and Notes</title>
   <style>
     #sortable-list {
       list-style: none;
@@ -30,19 +30,13 @@
     .editable:hover {
       background-color: #e0e0e0;
     }
-    .notes, .last-touchpoint {
+    .notes {
       display: block;
       margin: 5px 0;
       padding: 5px;
       font-size: 0.9em;
-    }
-    .notes {
       background-color: #f0f4c3;
       border-left: 3px solid #afb42b;
-    }
-    .last-touchpoint {
-      background-color: #e8f0fe;
-      border-left: 3px solid #4285f4;
     }
     button {
       display: block;
@@ -75,148 +69,137 @@
   </style>
 </head>
 <body>
-  <h1>Editable Draggable List Tool with Checkboxes, Notes, and Last Touchpoint</h1>
+  <h1>Editable Draggable List Tool with Checkboxes and Notes</h1>
   <button onclick="addNewItem()">Add New Item</button>
   <ul id="sortable-list">
     <li>
       <div class="title-row">
-        <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-        <span class="number">1. </span><span class="editable" contenteditable="true">CORRIVEAU, DANNY</span>
+        <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+        <span class="number">1. </span><span class="editable" contenteditable="true" oninput="saveList()">CORRIVEAU, DANNY</span>
       </div>
       <div class="notes">
-        <span class="editable" contenteditable="true">Danny mentioned needing a follow-up on the quote next week.</span>
+        <span class="editable" contenteditable="true" oninput="saveList()">Danny mentioned needing a follow-up on the quote next week.</span>
       </div>
       <ul class="sublist">
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">QUOTE LP OWNED BY DANNY AND MIL AS STR MANAGED BY PROP MGT CO</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">QUOTE LP OWNED BY DANNY AND MIL AS STR MANAGED BY PROP MGT CO</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">FRONTLINE - OVER 6BR MUST BE REVIEWED BY UW, TENT QUOTE $6,449</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">FRONTLINE - OVER 6BR MUST BE REVIEWED BY UW, TENT QUOTE $6,449</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">AM INT - QUOTED ALREADY</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">AM INT - QUOTED ALREADY</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">ORCHID</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">ORCHID</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">AMWINS</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">AMWINS</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">THIGH</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">THIGH</span>
         </li>
       </ul>
-      <div class="last-touchpoint">
-        <span class="editable" contenteditable="true">Last touchpoint: Called on 4/20/25</span>
-      </div>
     </li>
     <li>
       <div class="title-row">
-        <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-        <span class="number">2. </span><span class="editable" contenteditable="true">VACHET, FARREN</span>
+        <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+        <span class="number">2. </span><span class="editable" contenteditable="true" oninput="saveList()">VACHET, FARREN</span>
       </div>
       <div class="notes">
-        <span class="editable" contenteditable="true">Farren requested additional quotes for flood coverage.</span>
+        <span class="editable" contenteditable="true" oninput="saveList()">Farren requested additional quotes for flood coverage.</span>
       </div>
       <ul class="sublist">
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">QUOTE AUTO/UMB AND HOME, DONE?</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">QUOTE AUTO/UMB AND HOME, DONE?</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">PROGRESSIVE - QUOTED</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">PROGRESSIVE - QUOTED</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">RLI - QUOTED</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">RLI - QUOTED</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">MERCURY - SUBMITTED</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">MERCURY - SUBMITTED</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">OLYMPUS - DECLINED MUST BE MASONRY PIERS</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">OLYMPUS - DECLINED MUST BE MASONRY PIERS</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">THIG - OLDER THAN 2005 INELIGIBLE FOR WOOD PILINGS</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">THIG - OLDER THAN 2005 INELIGIBLE FOR WOOD PILINGS</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">FRONTLINE - QUOTED</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">FRONTLINE - QUOTED</span>
         </li>
       </ul>
-      <div class="last-touchpoint">
-        <span class="editable" contenteditable="true">Last touchpoint: Emailed on 4/22/25</span>
-      </div>
     </li>
     <li>
       <div class="title-row">
-        <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-        <span class="number">3. </span><span class="editable" contenteditable="true">ELWYN, TASH</span>
+        <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+        <span class="number">3. </span><span class="editable" contenteditable="true" oninput="saveList()">ELWYN, TASH</span>
       </div>
       <div class="notes">
-        <span class="editable" contenteditable="true">Tash needs clarification on flood quote requirements.</span>
+        <span class="editable" contenteditable="true" oninput="saveList()">Tash needs clarification on flood quote requirements.</span>
       </div>
       <ul class="sublist">
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">X-WIND QUOTES NEEDED, AND EXCESS FLOOD QUOTES NEEDED, REFER TO HIS EMAIL, DONE?</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">X-WIND QUOTES NEEDED, AND EXCESS FLOOD QUOTES NEEDED, REFER TO HIS EMAIL, DONE?</span>
         </li>
       </ul>
-      <div class="last-touchpoint">
-        <span class="editable" contenteditable="true">Last touchpoint: Awaiting response as of 4/23/25</span>
-      </div>
     </li>
     <li>
       <div class="title-row">
-        <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-        <span class="number">4. </span><span class="editable" contenteditable="true">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
+        <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+        <span class="number">4. </span><span class="editable" contenteditable="true" oninput="saveList()">ELLIOTT, NASHANA (CALL IN CHUBB)</span>
       </div>
       <div class="notes">
-        <span class="editable" contenteditable="true">Nashana confirmed receipt of initial info.</span>
+        <span class="editable" contenteditable="true" oninput="saveList()">Nashana confirmed receipt of initial info.</span>
       </div>
       <ul class="sublist">
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">CLIENT SENT INFO, GETTING WATER SECURITY QUOTE TO INSTALL, SUBMITTED TO CHUBB/PURE, HEAR?</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">CLIENT SENT INFO, GETTING WATER SECURITY QUOTE TO INSTALL, SUBMITTED TO CHUBB/PURE, HEAR?</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">CHUBB - SENT FOR REVIEW</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">CHUBB - SENT FOR REVIEW</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">PURE - SENT FOR REVIEW</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">PURE - SENT FOR REVIEW</span>
         </li>
         <li>
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="editable" contenteditable="true">SLIDE - INCUMBENT</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="editable" contenteditable="true" oninput="saveList()">SLIDE - INCUMBENT</span>
         </li>
       </ul>
-      <div class="last-touchpoint">
-        <span class="editable" contenteditable="true">Last touchpoint: Submitted on 4/21/25</span>
-      </div>
     </li>
   </ul>
 
   <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
   <script>
     const sortableList = document.getElementById('sortable-list');
-    
+
     // Initialize SortableJS for drag-and-drop
     new Sortable(sortableList, {
       animation: 150,
       onEnd: function (evt) {
         updateNumbers();
+        saveList();
       }
     });
 
@@ -241,6 +224,73 @@
       }
     }
 
+    // Function to save the list state to localStorage
+    function saveList() {
+      const items = [];
+      const listItems = sortableList.getElementsByTagName('li');
+      for (let i = 0; i < listItems.length; i++) {
+        const item = listItems[i];
+        const titleCheckbox = item.querySelector('.title-row .checkbox');
+        const titleText = item.querySelector('.title-row .editable').innerText;
+        const notesText = item.querySelector('.notes .editable').innerText;
+        const sublistItems = item.querySelectorAll('.sublist li');
+        const sublist = [];
+        sublistItems.forEach(subItem => {
+          const subCheckbox = subItem.querySelector('.checkbox');
+          const subText = subItem.querySelector('.editable').innerText;
+          sublist.push({
+            text: subText,
+            checked: subCheckbox.checked
+          });
+        });
+        items.push({
+          title: titleText,
+          titleChecked: titleCheckbox.checked,
+          notes: notesText,
+          sublist: sublist
+        });
+      }
+      localStorage.setItem('draggableList', JSON.stringify(items));
+    }
+
+    // Function to load the list state from localStorage
+    function loadList() {
+      const savedItems = localStorage.getItem('draggableList');
+      if (savedItems) {
+        const items = JSON.parse(savedItems);
+        sortableList.innerHTML = ''; // Clear the default list
+        items.forEach((item, index) => {
+          const newItem = document.createElement('li');
+          newItem.innerHTML = `
+            <div class="title-row">
+              <input type="checkbox" class="checkbox" ${item.titleChecked ? 'checked' : ''} onchange="toggleItalic(this); saveList()">
+              <span class="number">${index + 1}. </span><span class="editable" contenteditable="true" oninput="saveList()">${item.title}</span>
+            </div>
+            <div class="notes">
+              <span class="editable" contenteditable="true" oninput="saveList()">${item.notes}</span>
+            </div>
+            <ul class="sublist">
+              ${item.sublist.map(sub => `
+                <li>
+                  <input type="checkbox" class="checkbox" ${sub.checked ? 'checked' : ''} onchange="toggleItalic(this); saveList()">
+                  <span class="editable" contenteditable="true" oninput="saveList()">${sub.text}</span>
+                </li>
+              `).join('')}
+            </ul>
+          `;
+          sortableList.appendChild(newItem);
+          // Re-apply italic style to checked items
+          const checkboxes = newItem.querySelectorAll('.checkbox');
+          checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+              const editableText = checkbox.nextElementSibling.nextElementSibling || checkbox.nextElementSibling;
+              editableText.classList.add('italic');
+            }
+          });
+        });
+      }
+    }
+
     // Function to add a new item
     function addNewItem() {
       const newItem = document.createElement('li');
@@ -248,26 +298,27 @@
       
       newItem.innerHTML = `
         <div class="title-row">
-          <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-          <span class="number">${itemCount}. </span><span class="editable" contenteditable="true">New Item</span>
+          <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+          <span class="number">${itemCount}. </span><span class="editable" contenteditable="true" oninput="saveList()">New Item</span>
         </div>
         <div class="notes">
-          <span class="editable" contenteditable="true">Add notes here...</span>
+          <span class="editable" contenteditable="true" oninput="saveList()">Add notes here...</span>
         </div>
         <ul class="sublist">
           <li>
-            <input type="checkbox" class="checkbox" onchange="toggleItalic(this)">
-            <span class="editable" contenteditable="true">Add details here...</span>
+            <input type="checkbox" class="checkbox" onchange="toggleItalic(this); saveList()">
+            <span class="editable" contenteditable="true" oninput="saveList()">Add details here...</span>
           </li>
         </ul>
-        <div class="last-touchpoint">
-          <span class="editable" contenteditable="true">Last touchpoint: Add note here...</span>
-        </div>
       `;
       
       sortableList.appendChild(newItem);
       updateNumbers();
+      saveList();
     }
+
+    // Load the saved list when the page loads
+    window.onload = loadList;
   </script>
 </body>
 </html>
