@@ -7,21 +7,21 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0; /* Remove default margin to prevent gaps */
+      margin: 0;
     }
     .header {
-      position: fixed; /* Fix the header at the top */
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      background-color: #fff; /* White background to ensure readability */
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
-      z-index: 1000; /* Ensure header stays above other content */
-      padding: 10px 0; /* Add some padding */
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      padding: 10px 0;
     }
     h1 {
       text-align: center;
-      margin: 0; /* Remove default margin */
+      margin: 0;
       padding: 10px 0;
     }
     .controls {
@@ -33,11 +33,16 @@
       color: #666;
       margin: 5px 0;
     }
+    #status-select {
+      margin: 5px;
+      padding: 5px;
+      font-size: 0.8em;
+    }
     #sortable-list {
       list-style: none;
       padding: 0;
       max-width: 800px;
-      margin: 150px auto 20px auto; /* Add top margin to prevent overlap with fixed header */
+      margin: 150px auto 20px auto;
     }
     #sortable-list > li {
       padding: 10px;
@@ -63,7 +68,7 @@
       display: block;
       margin: 5px 0;
       padding: 5px;
-      font-size: 0.9em;
+      font-size: 1em; /* Same size as sublist items */
     }
     button {
       display: inline-block;
@@ -101,14 +106,22 @@
       align-items: center;
       margin-bottom: 10px;
       font-weight: bold;
-      background-color: #e6f0fa;
+      background-color: #e6f0fa; /* Default highlight color */
       padding: 5px;
+      font-size: 1.2em; /* Larger font for main list item */
+    }
+    .title-row.waiting {
+      background-color: #fff3cd; /* Yellow for Waiting for Client */
+    }
+    .title-row.completed {
+      background-color: #d4edda; /* Green for Completed */
     }
     .sublist li {
       display: flex;
       align-items: center;
       margin: 5px 0;
       cursor: move;
+      font-size: 1em; /* Same size as notes */
     }
   </style>
 </head>
@@ -116,10 +129,15 @@
   <div class="header">
     <h1>Account Marketing List</h1>
     <div class="controls">
-      <button onclick="addNewItem()">Add New Item</button>
+      <button onclick="addNewItem()">Add New Client</button>
       <button onclick="saveList()">Save Changes</button>
       <button onclick="undoAction()">Undo</button>
       <button onclick="redoAction()">Redo</button>
+      <select id="status-select" onchange="updateHighlightColor()">
+        <option value="default">Select Status</option>
+        <option value="waiting">Waiting for Client</option>
+        <option value="completed">Completed</option>
+      </select>
     </div>
     <div id="last-save">Last saved: Not yet saved</div>
   </div>
@@ -272,6 +290,7 @@
   <script>
     const sortableList = document.getElementById('sortable-list');
     const lastSaveDisplay = document.getElementById('last-save');
+    const statusSelect = document.getElementById('status-select');
     const BACKEND_URL = "https://draggable-list-backend.glitch.me"; // Replace with your Glitch project URL
     let itemCounter = sortableList.children.length; // For generating unique IDs
     const undoStack = []; // Stack to store previous states for undo
@@ -311,6 +330,20 @@
       });
     }
 
+    // Function to update the highlight color based on dropdown selection
+    function updateHighlightColor() {
+      const status = statusSelect.value;
+      const titleRows = document.querySelectorAll('.title-row');
+      titleRows.forEach(row => {
+        row.classList.remove('waiting', 'completed');
+        if (status === 'waiting') {
+          row.classList.add('waiting');
+        } else if (status === 'completed') {
+          row.classList.add('completed');
+        }
+      });
+    }
+
     // Function to save the current state for undo
     function saveStateForUndo() {
       const state = getListState();
@@ -335,6 +368,7 @@
       const previousState = undoStack.pop();
       renderListFromState(previousState);
       initializeSublistSorting(); // Re-initialize sorting after undoing
+      updateHighlightColor(); // Re-apply highlight color after undoing
     }
 
     // Function to redo the last undone action
@@ -351,6 +385,7 @@
       const nextState = redoStack.pop();
       renderListFromState(nextState);
       initializeSublistSorting(); // Re-initialize sorting after redoing
+      updateHighlightColor(); // Re-apply highlight color after redoing
     }
 
     // Function to render the list from a given state
@@ -560,6 +595,7 @@
           });
         }
         initializeSublistSorting(); // Initialize sorting after loading
+        updateHighlightColor(); // Apply initial highlight color
       } catch (error) {
         console.error('Error loading list:', error);
         initializeSublistSorting(); // Initialize sorting even if loading fails
@@ -592,6 +628,7 @@
       `;
       sortableList.prepend(newItem); // Add to the top
       initializeSublistSorting(); // Re-initialize sorting for the new sublist
+      updateHighlightColor(); // Apply highlight color to new item
     }
 
     // Load the saved list when the page loads
