@@ -38,15 +38,22 @@
     }
     button {
       display: inline-block;
-      margin: 10px 5px;
-      padding: 10px 20px;
+      margin: 5px 5px 5px 0;
+      padding: 5px 10px;
       background-color: #4CAF50;
       color: white;
       border: none;
       cursor: pointer;
+      font-size: 0.8em;
     }
     button:hover {
       background-color: #45a049;
+    }
+    .remove-btn {
+      background-color: #e74c3c;
+    }
+    .remove-btn:hover {
+      background-color: #c0392b;
     }
     .checkbox {
       margin-right: 10px;
@@ -93,28 +100,35 @@
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">QUOTE LP OWNED BY DANNY AND MIL AS STR MANAGED BY PROP MGT CO</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">FRONTLINE - OVER 6BR MUST BE REVIEWED BY UW, TENT QUOTE $6,449</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">AM INT - QUOTED ALREADY</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">ORCHID</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">AMWINS</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">THIGH</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
       </ul>
+      <button onclick="addSubItem(this)">Add Sub-Item</button>
     </li>
     <li>
       <div class="title-row">
@@ -129,32 +143,40 @@
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">QUOTE AUTO/UMB AND HOME, DONE?</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">PROGRESSIVE - QUOTED</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">RLI - QUOTED</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">MERCURY - SUBMITTED</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">OLYMPUS - DECLINED MUST BE MASONRY PIERS</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">THIG - OLDER THAN 2005 INELIGIBLE FOR WOOD PILINGS</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">FRONTLINE - QUOTED</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
       </ul>
+      <button onclick="addSubItem(this)">Add Sub-Item</button>
     </li>
     <li>
       <div class="title-row">
@@ -169,8 +191,10 @@
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">X-WIND QUOTES NEEDED, AND EXCESS FLOOD QUOTES NEEDED, REFER TO HIS EMAIL, DONE?</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
       </ul>
+      <button onclick="addSubItem(this)">Add Sub-Item</button>
     </li>
     <li>
       <div class="title-row">
@@ -185,20 +209,25 @@
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">CLIENT SENT INFO, GETTING WATER SECURITY QUOTE TO INSTALL, SUBMITTED TO CHUBB/PURE, HEAR?</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">CHUBB - SENT FOR REVIEW</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">PURE - SENT FOR REVIEW</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
         <li>
           <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
           <span class="editable" contenteditable="true">SLIDE - INCUMBENT</span>
+          <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
         </li>
       </ul>
+      <button onclick="addSubItem(this)">Add Sub-Item</button>
     </li>
   </ul>
 
@@ -215,7 +244,7 @@
       }
     });
 
-    // Function to update numbering after dragging
+    // Function to update numbering progressively (1, 2, 3, 4, etc.)
     function updateNumbers() {
       const items = sortableList.getElementsByTagName('li');
       for (let i = 0; i < items.length; i++) {
@@ -234,6 +263,25 @@
       } else {
         editableText.classList.remove('lighter-gray');
       }
+    }
+
+    // Function to add a new sub-item
+    function addSubItem(button) {
+      const mainItem = button.parentElement;
+      const sublist = mainItem.querySelector('.sublist');
+      const newSubItem = document.createElement('li');
+      newSubItem.innerHTML = `
+        <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
+        <span class="editable" contenteditable="true">New sub-item...</span>
+        <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
+      `;
+      sublist.appendChild(newSubItem);
+    }
+
+    // Function to remove a sub-item
+    function removeSubItem(button) {
+      const subItem = button.parentElement;
+      subItem.remove();
     }
 
     // Function to collect the current list state
@@ -338,9 +386,11 @@
                   <li>
                     <input type="checkbox" class="checkbox" ${sub.checked ? 'checked' : ''} onchange="toggleGray(this)">
                     <span class="editable" contenteditable="true">${sub.text}</span>
+                    <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
                   </li>
                 `).join('')}
               </ul>
+              <button onclick="addSubItem(this)">Add Sub-Item</button>
             `;
             sortableList.appendChild(newItem);
             // Re-apply lighter gray style to checked items
@@ -352,10 +402,11 @@
               }
             });
           });
+          updateNumbers(); // Ensure numbers are correct after loading
         }
       } catch (error) {
         console.error('Error loading list:', error);
-        // Fallback to the default list if loading fails
+        updateNumbers(); // Ensure numbers are correct even if loading fails
       }
     }
 
@@ -375,8 +426,10 @@
           <li>
             <input type="checkbox" class="checkbox" onchange="toggleGray(this)">
             <span class="editable" contenteditable="true">Add details here...</span>
+            <button class="remove-btn" onclick="removeSubItem(this)">Remove</button>
           </li>
         </ul>
+        <button onclick="addSubItem(this)">Add Sub-Item</button>
       `;
       sortableList.prepend(newItem); // Add to the top
       updateNumbers();
