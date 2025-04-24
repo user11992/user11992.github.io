@@ -265,7 +265,8 @@
         const owner = "user11992";
         const repo = "draggable-list-tool"; // Replace with your repository name
         const path = "index.html";
-        const url = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+        const corsProxy = "https://cors-anywhere.herokuapp.com/";
+        const url = `${corsProxy}https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
 
         console.log('Fetching current file from GitHub...');
         const response = await fetch(url, {
@@ -278,7 +279,7 @@
 
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error('Failed to fetch current file: ' + errorData.message);
+          throw new Error('Failed to fetch current file: ' + (errorData.message || response.statusText));
         }
 
         const fileData = await response.json();
@@ -320,7 +321,7 @@
           alert('List saved successfully! Refresh the page to see the updated list.');
         } else {
           const errorData = await updateResponse.json();
-          throw new Error('Error saving list: ' + errorData.message);
+          throw new Error('Error saving list: ' + (errorData.message || updateResponse.statusText));
         }
       } catch (error) {
         console.error('Error in saveListToGitHub:', error);
